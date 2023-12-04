@@ -1,8 +1,11 @@
-import '~/bootstrap.js';
+// import '~/bootstrap.js';
 import { createInertiaApp } from '@inertiajs/react';
 import { createRoot } from "react-dom/client";
 import { ChakraProvider, extendTheme, withDefaultColorScheme } from '@chakra-ui/react';
 import { type ReactNode } from 'react';
+
+type CreateInertiaAppOptions = Parameters<typeof createInertiaApp>[0];
+type SetupOpts = Parameters<CreateInertiaAppOptions["setup"]>[0];
 
 const theme = extendTheme(withDefaultColorScheme({
   colorScheme: "red",
@@ -17,8 +20,9 @@ const theme = extendTheme(withDefaultColorScheme({
 });
 
 function Providers({ children }: {
-    children: ReactNode;
-}) {
+  children: ReactNode;
+  el: HTMLElement;
+} & Omit<SetupOpts, "el">) {
   return <>
     <ChakraProvider
       theme={theme}
@@ -35,7 +39,8 @@ function Providers({ children }: {
 
 function Wrapper({ children }: {
   children: ReactNode;
-}) {
+  el: HTMLElement;
+} & Omit<SetupOpts, "el">) {
   return <>
     { children }
   </>;
@@ -49,8 +54,8 @@ createInertiaApp({
   },
   setup({ el, App, props }) {
     createRoot(el).render(
-      <Providers>
-        <Wrapper>
+      <Providers {...{ el, App, props }}>
+        <Wrapper {...{ el, App, props }}>
           <App {...props} />
         </Wrapper>
       </Providers>

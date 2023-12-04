@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
+
+use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +17,32 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return inertia("Auth/Login");
+    if (session("login", false)) {
+        return inertia("Home");
+    } else {
+        return to_route('login');
+    }
+})->name("home");
+
+Route::get('/auth/login', function () {
+    if (session("login", false)) {
+        return to_route("home");
+    } else {
+        return inertia("Auth/Login");
+    }
+})->name("login");
+
+Route::post('/auth/login', function (Request $req) {
+    if ( $req->input("nik") == "8899003112230000" && $req->input("password") == "TestPass123!" ) {
+        session(["login" => true]);
+        return to_route("home");
+    }
+    return back()->withErrors([
+        "login" => false,
+    ]);
 });
 
-Route::post('/auth/login', function () {
-
-});
+Route::post('/auth/logout', function (Request $req) {
+    session(["login" => false]);
+    return to_route("login");
+})->name("logout");
