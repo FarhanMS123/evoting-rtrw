@@ -15,5 +15,9 @@ use Inertia\Inertia;
 */
 
 Route::get('/', function () {
-    return inertia("Login");
+    return inertia("Auth/Login");
+});
+
+Route::post('/auth/login', function () {
+
 });
