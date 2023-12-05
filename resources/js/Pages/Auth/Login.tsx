@@ -1,7 +1,9 @@
 import { Alert, AlertIcon, Button, Card, CardBody, CardHeader, Center, FormControl, FormLabel, HStack, Heading, Image, Input } from "@chakra-ui/react";
 import { useForm } from "@inertiajs/react";
+import { CompProps } from "~/app";
 
 type Form = { nik: string; password: string; login?: boolean; };
+
 export default function Login() {
   const { setData, post, errors } = useForm<Form>();
 
@@ -34,4 +36,8 @@ export default function Login() {
       </Card>
     </Center>
   </>;
+}
+
+(Login as unknown as CompProps).layout_props = {
+  isDisabled: true,
 }

@@ -1,11 +1,24 @@
 // import '~/bootstrap.js';
 import { createInertiaApp } from '@inertiajs/react';
 import { createRoot } from "react-dom/client";
-import { ChakraProvider, extendTheme, withDefaultColorScheme } from '@chakra-ui/react';
+import { ChakraProvider, type ContainerProps, extendTheme, withDefaultColorScheme } from '@chakra-ui/react';
 import { type ReactNode } from 'react';
+import Layout from './Components/Layout';
 
-type CreateInertiaAppOptions = Parameters<typeof createInertiaApp>[0];
-type SetupOpts = Parameters<CreateInertiaAppOptions["setup"]>[0];
+export type CreateInertiaAppOptions = Parameters<typeof createInertiaApp>[0];
+export type SetupOpts = Parameters<CreateInertiaAppOptions["setup"]>[0];
+export type CompProps = SetupOpts["props"]["initialComponent"] & {
+  layout_props?: ContainerProps & {
+    isDisabled?: boolean;
+  };
+};
+export type PropsOpt = {
+  initialComponent: CompProps;
+} & Omit<SetupOpts["props"], "initialComponent">;
+export type NewSetupOpts = {
+  el: HTMLElement;
+  props: PropsOpt;
+} & Omit<SetupOpts, "el" | "props">;
 
 const theme = extendTheme(withDefaultColorScheme({
   colorScheme: "red",
@@ -21,8 +34,7 @@ const theme = extendTheme(withDefaultColorScheme({
 
 function Providers({ children }: {
   children: ReactNode;
-  el: HTMLElement;
-} & Omit<SetupOpts, "el">) {
+} & NewSetupOpts) {
   return <>
     <ChakraProvider
       theme={theme}
@@ -37,12 +49,16 @@ function Providers({ children }: {
   </>;
 }
 
-function Wrapper({ children }: {
+function Wrapper({ children, props }: {
   children: ReactNode;
-  el: HTMLElement;
-} & Omit<SetupOpts, "el">) {
+} & NewSetupOpts) {
   return <>
-    { children }
+    { !props.initialComponent.layout_props?.isDisabled ?
+        <Layout { ...( props.initialComponent.layout_props ?? {} ) }>
+          { children }
+        </Layout>
+      : children
+    }
   </>;
 }
 
@@ -52,7 +68,7 @@ createInertiaApp({
     const pages = import.meta.glob('./Pages/**/*.tsx', { eager: true })
     return pages[`./Pages/${name}.tsx`]
   },
-  setup({ el, App, props }) {
+  setup: ({ el, App, props }: NewSetupOpts) => {
     createRoot(el).render(
       <Providers {...{ el, App, props }}>
         <Wrapper {...{ el, App, props }}>

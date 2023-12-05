@@ -16,14 +16,6 @@ use Symfony\Component\HttpFoundation\Response;
 |
 */
 
-Route::get('/', function () {
-    if (session("login", false)) {
-        return inertia("Home");
-    } else {
-        return to_route('login');
-    }
-})->name("home");
-
 Route::get('/auth/login', function () {
     if (session("login", false)) {
         return to_route("home");
@@ -46,3 +38,11 @@ Route::post('/auth/logout', function (Request $req) {
     session(["login" => false]);
     return to_route("login");
 })->name("logout");
+
+Route::get('/', function () {
+    if (session("login", false)) {
+        return inertia("Home");
+    } else {
+        return to_route('login');
+    }
+})->name("home");
