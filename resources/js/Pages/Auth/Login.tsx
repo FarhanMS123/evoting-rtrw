@@ -37,7 +37,3 @@ export default function Login() {
     </Center>
   </>;
 }
-
-(Login as unknown as CompProps).layout_props = {
-  isDisabled: true,
-}

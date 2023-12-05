@@ -49,16 +49,11 @@ function Providers({ children }: {
   </>;
 }
 
-function Wrapper({ children, props }: {
+function Wrapper({ children }: {
   children: ReactNode;
 } & NewSetupOpts) {
   return <>
-    { !props.initialComponent.layout_props?.isDisabled ?
-        <Layout { ...( props.initialComponent.layout_props ?? {} ) }>
-          { children }
-        </Layout>
-      : children
-    }
+    { children }
   </>;
 }
 

@@ -1,16 +1,15 @@
 import { type ContainerProps, Avatar, Button, Card, Container, HStack, Image, Menu, MenuButton, MenuItem, MenuList, useToast } from "@chakra-ui/react";
 import { router } from "@inertiajs/react";
-import { type ReactNode } from "react";
 
 export default function Layout({ children, ...props }: ContainerProps) {
   const toast = useToast({
     status: "error",
   });
 
-  const doToast = () => toast({ description: "Waktu pemilihan masih belum dimulai. Mohon harap bersabar.", });
+  const doToast = () => toast({ description: "Waktu pemilihan masih belum dimulai. Mohon untuk menunggu hingga waktu yang telah ditentuan.", });
 
   return <>
-    <Card p={4}>
+    <Card p={4} borderRadius={0}>
       <HStack>
         <Image src="/assets/logo-nm.png" boxSize={10} />
         <HStack gap={0} ml={2}>
@@ -32,7 +31,7 @@ export default function Layout({ children, ...props }: ContainerProps) {
         </HStack>
       </HStack>
     </Card>
-    <Container maxW="container.xl" pt={6} {...props}>
+    <Container maxW="container.xl" py={6} {...props}>
       { children }
     </Container>
   </>;
