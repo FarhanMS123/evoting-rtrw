@@ -1,5 +1,8 @@
-import { type ContainerProps, Avatar, Button, Card, Container, HStack, Image, Menu, MenuButton, MenuItem, MenuList, useToast } from "@chakra-ui/react";
+import { type ContainerProps, type MenuItemProps, type ButtonProps, Avatar, Button, Card, Container, HStack, Image, Menu, MenuButton, MenuItem, MenuList, useToast, MenuDivider } from "@chakra-ui/react";
 import { router } from "@inertiajs/react";
+
+const StyledButton = ({ children, ...props }: ButtonProps) => (<Button variant="ghost" display={{ base: "none", lg: "block" }} {...props}>{ children }</Button>)
+const StyledMenuList = ({ children, ...props }: MenuItemProps) => (<MenuItem display={{ lg: "none" }} {...props}>{ children }</MenuItem>)
 
 export default function Layout({ children, ...props }: ContainerProps) {
   const toast = useToast({
@@ -13,18 +16,24 @@ export default function Layout({ children, ...props }: ContainerProps) {
       <HStack>
         <Image src="/assets/logo-nm.png" boxSize={10} />
         <HStack gap={0} ml={2}>
-          <Button variant="ghost" isActive>Beranda</Button>
-          <Button variant="ghost" onMouseUp={ () => doToast() }>Mulai Voting</Button>
-          <Button variant="ghost" onMouseUp={ () => doToast() }>Hasil Pemilihan</Button>
+          <StyledButton isActive>Beranda</StyledButton>
+          <StyledButton onMouseUp={ () => doToast() }>Mulai Voting</StyledButton>
+          <StyledButton onMouseUp={ () => doToast() }>Hasil Pemilihan</StyledButton>
         </HStack>
         <HStack gap={0} ml="auto">
-          <Button variant="ghost">Bantuan</Button>
-          <Button variant="ghost" isDisabled>Dashboard</Button>
+          <StyledButton>Bantuan</StyledButton>
+          <StyledButton isDisabled>Dashboard</StyledButton>
           <Menu>
             <MenuButton as={Button} leftIcon={<Avatar name='RA' size="sm" />} variant="ghost" colorScheme="gray">
               Rizky Agustin
             </MenuButton>
             <MenuList>
+              <StyledMenuList>Beranda</StyledMenuList>
+              <StyledMenuList>Mulai Voting</StyledMenuList>
+              <StyledMenuList>Hasil Pemilihan</StyledMenuList>
+              <MenuDivider display={{ lg: "none" }} />
+              <StyledMenuList>Dashboard</StyledMenuList>
+              <StyledMenuList>Bantuan</StyledMenuList>
               <MenuItem onClick={() => router.post("/auth/logout")}>Keluar</MenuItem>
             </MenuList>
           </Menu>
