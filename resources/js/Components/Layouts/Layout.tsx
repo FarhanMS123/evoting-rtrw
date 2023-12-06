@@ -22,13 +22,13 @@ export default function Layout({ children, ...props }: ContainerProps) {
         </HStack>
         <HStack gap={0} ml="auto">
           <StyledButton>Bantuan</StyledButton>
-          <StyledButton isDisabled>Dashboard</StyledButton>
+          <StyledButton>Dashboard</StyledButton>
           <Menu>
             <MenuButton as={Button} leftIcon={<Avatar name='RA' size="sm" />} variant="ghost" colorScheme="gray">
               Rizky Agustin
             </MenuButton>
-            <MenuList>
-              <StyledMenuList>Beranda</StyledMenuList>
+            <MenuList zIndex={1000}>
+              <StyledMenuList bg="red.100">Beranda</StyledMenuList>
               <StyledMenuList>Mulai Voting</StyledMenuList>
               <StyledMenuList>Hasil Pemilihan</StyledMenuList>
               <MenuDivider display={{ lg: "none" }} />

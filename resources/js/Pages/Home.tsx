@@ -1,8 +1,8 @@
-import { Alert, AlertIcon, Box, Card, CardBody, HStack, Link, Stack, Text, VStack } from "@chakra-ui/react";
+import { Alert, AlertIcon, HStack, VStack } from "@chakra-ui/react";
 import { type ReactNode } from "react";
-import Layout from "~/Components/Layout";
+import Layout from "~/Components/Layouts/Layout";
 import Calon from "~/Components/pages/Home/Calon";
-import { JadwalCard, JadwalMiniCard } from "~/Components/pages/Home/JadwalCard";
+import { JadwalCard } from "~/Components/pages/Home/JadwalCard";
 
 const DrKittyVisi = "Menciptakan RT/RW yang makmur dan sejahtera dengan merberdayakan tikus dan hewan-hewan kecil lainnya dalam kegiatan yang prduktif dan menghasilkan. Serta menciptakan ketentraman antar-kucing dan hewan-hewan lainnya dalam kesepakatan yang menguntungkan di kedua belah pihak.";
 const MrTeddyBearVisi = "Menciptakan RT/RW yang manis dan tentram melalui program-program yang memadukan setiap makhluk dalam keuntungan setimpal.";
@@ -31,4 +31,4 @@ export default function Home() {
   </>;
 }
 
-Home.layout = (page: ReactNode) => <Layout maxW={["container.xl", "container.lg"]}>{page}</Layout>
+Home.layout = (page: ReactNode) => <Layout maxW={["container.xl", "container.lg"]}>{page}</Layout>;

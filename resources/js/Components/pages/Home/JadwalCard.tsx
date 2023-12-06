@@ -85,7 +85,7 @@ export function JadwalMiniCard({ sx, ...props }: Omit<StepperProps, "children" |
 
 export function JadwalCard ({ children, variant, ...props }: CardProps & Pick<Parameters<typeof Jadwal>[0], "variant">) {
   return (
-    <Card overflow="hidden" {...props}>
+    <Card overflow="hidden" position="relative" {...props}>
       <CardBody>
         <Jadwal variant={variant} mt="-4.1rem" mb="-5rem" />
       </CardBody>
