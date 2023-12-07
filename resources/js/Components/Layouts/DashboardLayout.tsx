@@ -1,6 +1,6 @@
-import { Card, CardBody, Tab, TabList, Tabs } from "@chakra-ui/react";
-import Layout from "./Layout";
-import { Link } from "@inertiajs/react";
+import { Card, CardBody, Tab, TabList, Tabs, VStack } from "@chakra-ui/react";
+import Layout, { DefaultPageProps } from "./Layout";
+import { Link, usePage } from "@inertiajs/react";
 
 export enum DashboardMenu {
   Profile = 0,
@@ -11,28 +11,35 @@ export enum DashboardMenu {
 export default function DashboardLayout({ children, selectedMenu, ...props }: {
   selectedMenu: DashboardMenu;
 } & Parameters<typeof Layout>[0]) {
-
-  console.log({selectedMenu});
+  const { props: { auth, app_debug } } = usePage<DefaultPageProps>();
 
   return (
     <Layout {...props}>
-      <Card mb={4} p={2}>
-        <Tabs variant="soft-rounded" w="full" index={selectedMenu}>
-          <TabList>
-            <Link href="/dashboard/profile">
-              <Tab>Profile</Tab>
-            </Link>
-            <Link href="/dashboard/users">
-              <Tab>Kelola Warga</Tab>
-            </Link>
-            <Link href="#">
-              <Tab>Kelola Calon</Tab>
-            </Link>
-          </TabList>
-        </Tabs>
-      </Card>
-
-      { children }
+      <VStack gap={4} alignItems="stretch">
+        <Card p={2}>
+          <Tabs variant="soft-rounded" w="full" index={selectedMenu}>
+            <TabList>
+              <Link href="/dashboard/profile">
+                <Tab>Profile</Tab>
+              </Link>
+              { Boolean(auth.user?.is_admin) && <>
+                <Link href="/dashboard/users">
+                  <Tab>Kelola Warga</Tab>
+                </Link>
+                <Link href="#">
+                  <Tab>Kelola Calon</Tab>
+                </Link>
+              </> }
+              { (auth.user?.is_admin || app_debug) &&
+                <Link href="#">
+                  <Tab>Debug</Tab>
+                </Link>
+              }
+            </TabList>
+          </Tabs>
+        </Card>
+        { children }
+      </VStack>
     </Layout>
   );
 }

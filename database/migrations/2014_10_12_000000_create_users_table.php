@@ -16,10 +16,12 @@ return new class extends Migration
             $table->string('nama');
             $table->string("alamat");
             $table->string("pekerjaan");
+            $table->string("telepon")->nullable();
             $table->set("jenis_kelamin", ["laki-laki", "perempuan"]);
             $table->string('password');
 
             $table->boolean("is_admin")->default(false);
+            $table->boolean("non_villager")->default(false);
             $table->rememberToken();
             $table->timestamps();
 

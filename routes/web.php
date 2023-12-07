@@ -18,14 +18,10 @@ use Symfony\Component\HttpFoundation\Response;
 require "auth.php";
 
 Route::get('/', function () {
-    if (session("login", false)) {
-        return inertia("Home");
-    } else {
-        return to_route('login');
-    }
-})->name("home");
+    return inertia("Home");
+})->middleware("auth")->name("home");
 
-Route::redirect("/dashboard", "/dashboard/profile");
-Route::inertia("/dashboard/profile", "Dashboard/Profile");
+Route::redirect("/dashboard", "/dashboard/profile")->middleware(["auth"]);
+Route::inertia("/dashboard/profile", "Dashboard/Profile")->middleware(["auth"]);
 
-Route::resource('dashboard/users', UserController::class);
+Route::resource('dashboard/users', UserController::class)->middleware(["auth", "rolem:is_admin"]);

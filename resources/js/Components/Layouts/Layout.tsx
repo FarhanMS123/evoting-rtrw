@@ -37,7 +37,27 @@ const StyledMenuList = ({ children, href, linkMatch, ...props }: {
   );
 }
 
+export type UserData = {
+  nik: string;
+  nama: string;
+  alamat: string;
+  pekerjaan: string;
+  jenis_kelamin: "laki-laki" | "perempuan";
+  telepon?: string;
+  password: string;
+  is_admin?: boolean;
+  non_villager?: boolean;
+};
+
+export type DefaultPageProps = {
+  app_debug: boolean;
+  auth: {
+    user: UserData | null;
+  };
+};
+
 export default function Layout({ children, ...props }: ContainerProps) {
+  const { props: { auth } } = usePage<DefaultPageProps>();
   const toast = useToast({
     status: "error",
   });
@@ -57,8 +77,8 @@ export default function Layout({ children, ...props }: ContainerProps) {
           <StyledButton href="" isDisabled>Bantuan</StyledButton>
           <StyledButton href="/dashboard" linkMatch={/^\/dashboard\/.*/}>Dashboard</StyledButton>
           <Menu>
-            <MenuButton as={Button} leftIcon={<Avatar name='RA' size="sm" />} variant="ghost" colorScheme="gray">
-              Rizky Agustin
+            <MenuButton as={Button} leftIcon={<Avatar name={ auth.user?.nama } size="sm" />} variant="ghost" colorScheme="gray">
+              { auth.user?.nama }
             </MenuButton>
             <MenuList zIndex={1000}>
               <StyledMenuList href="/">Beranda</StyledMenuList>
