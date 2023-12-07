@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -23,3 +24,8 @@ Route::get('/', function () {
         return to_route('login');
     }
 })->name("home");
+
+Route::redirect("/dashboard", "/dashboard/profile");
+Route::inertia("/dashboard/profile", "Dashboard/Profile");
+
+Route::resource('dashboard/users', UserController::class);

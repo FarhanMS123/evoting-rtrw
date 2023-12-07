@@ -1,8 +1,41 @@
 import { type ContainerProps, type MenuItemProps, type ButtonProps, Avatar, Button, Card, Container, HStack, Image, Menu, MenuButton, MenuItem, MenuList, useToast, MenuDivider } from "@chakra-ui/react";
-import { router } from "@inertiajs/react";
+import { Link, router, usePage } from "@inertiajs/react";
+import { useMemo } from "react";
 
-const StyledButton = ({ children, ...props }: ButtonProps) => (<Button variant="ghost" display={{ base: "none", lg: "block" }} {...props}>{ children }</Button>)
-const StyledMenuList = ({ children, ...props }: MenuItemProps) => (<MenuItem display={{ lg: "none" }} {...props}>{ children }</MenuItem>)
+const StyledButton = ({ children, href, linkMatch, ...props }: {
+  href: string;
+  linkMatch?: RegExp;
+} & ButtonProps) => {
+  const page = usePage();
+  const isActive = useMemo(() => {
+    let link = href.split(/(#|\?)/)[0];
+    let matcher = link.length > 0 ? new RegExp(`^${ link }(\\?.*)?$`) : new RegExp("^\0");
+    return (linkMatch ?? matcher).test(page.url);
+  }, [ href, linkMatch ]);
+
+  return (
+    <Link href={href}>
+      <Button variant="ghost" display={{ base: "none", lg: "block" }} isActive={isActive} {...props}>{ children }</Button>
+    </Link>
+  );
+}
+const StyledMenuList = ({ children, href, linkMatch, ...props }: {
+  href: string;
+  linkMatch?: RegExp;
+} & MenuItemProps) => {
+  const page = usePage();
+  const isActive = useMemo(() => {
+    let link = href.split(/(#|\?)/)[0];
+    let matcher = link.length > 0 ? new RegExp(`^${ link }(\\?.*)?$`) : new RegExp("^\0");
+    return (linkMatch ?? matcher).test(page.url);
+  }, [ href, linkMatch ]);
+
+  return (
+    <Link href={href}>
+      <MenuItem display={{ lg: "none" }} bg={ isActive ? "red.100" : undefined } {...props}>{ children }</MenuItem>
+    </Link>
+  );
+}
 
 export default function Layout({ children, ...props }: ContainerProps) {
   const toast = useToast({
@@ -16,24 +49,24 @@ export default function Layout({ children, ...props }: ContainerProps) {
       <HStack>
         <Image src="/assets/logo-nm.png" boxSize={10} />
         <HStack gap={0} ml={2}>
-          <StyledButton isActive>Beranda</StyledButton>
-          <StyledButton onMouseUp={ () => doToast() }>Mulai Voting</StyledButton>
-          <StyledButton onMouseUp={ () => doToast() }>Hasil Pemilihan</StyledButton>
+          <StyledButton href="/">Beranda</StyledButton>
+          <StyledButton href="" onMouseUp={ () => doToast() }>Mulai Voting</StyledButton>
+          <StyledButton href="" onMouseUp={ () => doToast() }>Hasil Pemilihan</StyledButton>
         </HStack>
         <HStack gap={0} ml="auto">
-          <StyledButton>Bantuan</StyledButton>
-          <StyledButton>Dashboard</StyledButton>
+          <StyledButton href="" isDisabled>Bantuan</StyledButton>
+          <StyledButton href="/dashboard" linkMatch={/^\/dashboard\/.*/}>Dashboard</StyledButton>
           <Menu>
             <MenuButton as={Button} leftIcon={<Avatar name='RA' size="sm" />} variant="ghost" colorScheme="gray">
               Rizky Agustin
             </MenuButton>
             <MenuList zIndex={1000}>
-              <StyledMenuList bg="red.100">Beranda</StyledMenuList>
-              <StyledMenuList>Mulai Voting</StyledMenuList>
-              <StyledMenuList>Hasil Pemilihan</StyledMenuList>
+              <StyledMenuList href="/">Beranda</StyledMenuList>
+              <StyledMenuList href="">Mulai Voting</StyledMenuList>
+              <StyledMenuList href="">Hasil Pemilihan</StyledMenuList>
               <MenuDivider display={{ lg: "none" }} />
-              <StyledMenuList>Dashboard</StyledMenuList>
-              <StyledMenuList>Bantuan</StyledMenuList>
+              <StyledMenuList href="/dashboard" linkMatch={/^\/dashboard\/.*/}>Dashboard</StyledMenuList>
+              <StyledMenuList href="" isDisabled>Bantuan</StyledMenuList>
               <MenuItem onClick={() => router.post("/auth/logout")}>Keluar</MenuItem>
             </MenuList>
           </Menu>

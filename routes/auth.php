@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 
+// GET /dashboard/profile
+// POST /dashboard/update
+
 Route::get('/auth/login', function () {
     if (session("login", false)) {
         return to_route("home");

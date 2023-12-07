@@ -1,5 +1,9 @@
-import { type StepperProps, type CardProps, Box, Card, CardBody, Link, Text, useSteps, Stepper, Step, StepIndicator, StepStatus, StepTitle, StepDescription, StepSeparator, VStack, Avatar, Stat, StatLabel, StatNumber, StatHelpText } from "@chakra-ui/react";
-import { ExternalLinkIcon } from "lucide-react";
+import { ExternalLinkIcon } from "@chakra-ui/icons";
+import {
+  type CardProps, Box, Card, CardBody, Link, Text,
+  type StepperProps, useSteps, Stepper, Step, StepIndicator, StepStatus, StepTitle, StepDescription, StepSeparator,
+  VStack, Avatar, Stat, StatLabel, StatNumber, StatHelpText
+} from "@chakra-ui/react";
 import { useMemo } from "react";
 
 const empty_step = { title: <>&nbsp;</>, time: <>&nbsp;</>, date: ["", ""] };
@@ -93,7 +97,7 @@ export function JadwalCard ({ children, variant, ...props }: CardProps & Pick<Pa
         <Text textAlign="center">
           <Link verticalAlign="">
             <span>Lihat alur selengkapnya</span>
-            <ExternalLinkIcon size={20} style={{ display: "inline-block", position: "relative", marginBottom:"-0.19rem", marginLeft: "0.2rem", }} />
+            <ExternalLinkIcon position="relative" top="-0.125rem" ml={1} />
           </Link>
         </Text>
       </Box>

@@ -1,6 +1,7 @@
 lockfileVersion: 5.4
 
 specifiers:
+  '@chakra-ui/icons': ^2.1.1
   '@chakra-ui/react': ^2.8.2
   '@emotion/react': ^11.11.1
   '@emotion/styled': ^11.11.0
@@ -12,7 +13,6 @@ specifiers:
   framer-motion: ^10.16.12
   jotai: ^2.6.0
   laravel-vite-plugin: ^0.8.0
-  lucide-react: ^0.294.0
   react: ^18.2.0
   react-dom: ^18.2.0
   react-hook-form: ^7.48.2
@@ -21,13 +21,13 @@ specifiers:
   vite-tsconfig-paths: ^4.2.1
 
 dependencies:
+  '@chakra-ui/icons': 2.1.1_woytwhjtixdosusngyfk7vvafu
   '@chakra-ui/react': 2.8.2_xsx4463p2ji45y4az3p4glqaji
   '@emotion/react': 11.11.1_aubhhyadwwrly2ms2jqnyk2qcu
   '@emotion/styled': 11.11.0_x4qzsp7trrlrlz6xcad7qvinxu
   '@inertiajs/react': 1.0.14_react@18.2.0
   framer-motion: 10.16.12_biqbaboplfbrettd7655fr4n2y
   jotai: 2.6.0_aubhhyadwwrly2ms2jqnyk2qcu
-  lucide-react: 0.294.0_react@18.2.0
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.48.2_react@18.2.0
@@ -529,6 +529,17 @@ packages:
       react: '>=18'
     dependencies:
       '@chakra-ui/shared-utils': 2.0.5
+      '@chakra-ui/system': 2.6.2_5uavjbr3lmuxf4a3t6dmknaeea
+      react: 18.2.0
+    dev: false
+
+  /@chakra-ui/icons/2.1.1_woytwhjtixdosusngyfk7vvafu:
+    resolution: {integrity: sha512-3p30hdo4LlRZTT5CwoAJq3G9fHI0wDc0pBaMHj4SUn0yomO+RcDRlzhdXqdr5cVnzax44sqXJVnf3oQG0eI+4g==}
+    peerDependencies:
+      '@chakra-ui/system': '>=2.0.0'
+      react: '>=18'
+    dependencies:
+      '@chakra-ui/icon': 3.2.0_woytwhjtixdosusngyfk7vvafu
       '@chakra-ui/system': 2.6.2_5uavjbr3lmuxf4a3t6dmknaeea
       react: 18.2.0
     dev: false
@@ -2271,14 +2282,6 @@ packages:
     dependencies:
       yallist: 3.1.1
     dev: true
-
-  /lucide-react/0.294.0_react@18.2.0:
-    resolution: {integrity: sha512-V7o0/VECSGbLHn3/1O67FUgBwWB+hmzshrgDVRJQhMh8uj5D3HBuIvhuAmQTtlupILSplwIZg5FTc4tTKMA2SA==}
-    peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0
-    dependencies:
-      react: 18.2.0
-    dev: false
 
   /mime-db/1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
