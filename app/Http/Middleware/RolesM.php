@@ -20,6 +20,7 @@ class RolesM
             ($role == "is_admin" && Auth::user()->is_admin)
             || ($role == "non_villager" && Auth::user()->non_villager)
             || ($role == "is_villager" && !Auth::user()->non_villager)
+            || ($role == "is_debug" && env("APP_DEBUG"))
         ) return $next($request);
 
         return redirect("/");

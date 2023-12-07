@@ -6,6 +6,7 @@ export enum DashboardMenu {
   Profile = 0,
   KelolaWarga = 1,
   KelolaCalon = 2,
+  Debug = 3,
 }
 
 export default function DashboardLayout({ children, selectedMenu, ...props }: {
@@ -31,7 +32,7 @@ export default function DashboardLayout({ children, selectedMenu, ...props }: {
                 </Link>
               </> }
               { (auth.user?.is_admin || app_debug) &&
-                <Link href="#">
+                <Link href="/dashboard/debug">
                   <Tab>Debug</Tab>
                 </Link>
               }
