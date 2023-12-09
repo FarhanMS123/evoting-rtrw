@@ -3,5 +3,8 @@ deployment:
   tasks:
     - export DEPLOYPATH=../public_html/
     - echo $PWD >> a_text.txt
+    - where npm >> a_text.txt
+    - where composer >> a_text.txt
+    - where php >> a_text.txt
     - echo . >> a_text.txt
     - ls /bin >> a_text.txt
