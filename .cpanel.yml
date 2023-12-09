@@ -1,14 +1,5 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=../public_html/
-    - echo $PWD >> a_text.txt
-    - whereis php >> a_text.txt
-    - php -v >> a_text.txt
-    - ls /bin >> a_text1.txt
-    - ls /usr/lib64 >> a_text2.txt
-    - ls /usr/local/bin >> a_text3.txt
-    - whereis composer >> a_text.txt
-    - composer -V >> a_text.txt
-    - whereis npm >> a_text.txt
-    - npm -v >> a_text.txt
+    - export DEPLOYPATH=/home/rt6p7315/public_html
+    - ln -s $PWD/public $DEPLOYPATH
