@@ -2,4 +2,5 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/rt6p7315/public_html
-    - ln -s $PWD/public $DEPLOYPATH
+    - rm -Rfd $DEPLOYPATH/build
+    - cp -R $PWD/public/build $DEPLOYPATH/
