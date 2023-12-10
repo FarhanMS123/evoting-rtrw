@@ -1,6 +1,6 @@
 import { type ContainerProps, type MenuItemProps, type ButtonProps, Avatar, Button, Card, Container, HStack, Image, Menu, MenuButton, MenuItem, MenuList, useToast, MenuDivider } from "@chakra-ui/react";
 import { Link, router, usePage } from "@inertiajs/react";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 
 const StyledButton = ({ children, href, linkMatch, ...props }: {
   href: string;
@@ -11,7 +11,7 @@ const StyledButton = ({ children, href, linkMatch, ...props }: {
     let link = href.split(/(#|\?)/)[0];
     let matcher = link.length > 0 ? new RegExp(`^${ link }(\\?.*)?$`) : new RegExp("^\0");
     return (linkMatch ?? matcher).test(page.url);
-  }, [ href, linkMatch ]);
+  }, [ href, linkMatch, page ]);
 
   return (
     <Link href={href}>
@@ -26,9 +26,9 @@ const StyledMenuList = ({ children, href, linkMatch, ...props }: {
   const page = usePage();
   const isActive = useMemo(() => {
     let link = href.split(/(#|\?)/)[0];
-    let matcher = link.length > 0 ? new RegExp(`^${ link }(\\?.*)?$`) : new RegExp("^\0");
+    let matcher = link.length > 0 ? new RegExp(`^${ link }(\\?.*)?$`) : new RegExp("^\0$");
     return (linkMatch ?? matcher).test(page.url);
-  }, [ href, linkMatch ]);
+  }, [ href, linkMatch, page ]);
 
   return (
     <Link href={href}>
@@ -70,7 +70,7 @@ export default function Layout({ children, ...props }: ContainerProps) {
         <Image src="/assets/logo-nm.png" boxSize={10} />
         <HStack gap={0} ml={2}>
           <StyledButton href="/">Beranda</StyledButton>
-          <StyledButton href="" onMouseUp={ () => doToast() }>Mulai Voting</StyledButton>
+          <StyledButton href="/pemilihan">Mulai Voting</StyledButton>
           <StyledButton href="" onMouseUp={ () => doToast() }>Hasil Pemilihan</StyledButton>
         </HStack>
         <HStack gap={0} ml="auto">

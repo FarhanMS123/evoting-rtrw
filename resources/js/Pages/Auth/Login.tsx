@@ -13,7 +13,7 @@ export default function Login() {
     <Center>
       <Card maxW="calc(100% - 1rem)">
         <CardHeader>
-          <Heading size="sm">Masuk Pemilihan RT/RW</Heading>
+          <Heading size="sm">Pemilihan Ketua RT 6 RW 3</Heading>
         </CardHeader>
         <CardBody pt={0}>
           {(errors as Form).login == false && <Alert status='error' mb={4}>

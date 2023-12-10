@@ -4,9 +4,9 @@ import Layout from "~/Components/Layouts/Layout";
 import Calon from "~/Components/pages/Home/Calon";
 import { JadwalCard } from "~/Components/pages/Home/JadwalCard";
 
-const DrKittyVisi = "Menciptakan RT/RW yang makmur dan sejahtera dengan merberdayakan tikus dan hewan-hewan kecil lainnya dalam kegiatan yang prduktif dan menghasilkan. Serta menciptakan ketentraman antar-kucing dan hewan-hewan lainnya dalam kesepakatan yang menguntungkan di kedua belah pihak.";
-const MrTeddyBearVisi = "Menciptakan RT/RW yang manis dan tentram melalui program-program yang memadukan setiap makhluk dalam keuntungan setimpal.";
-const Misi = Array(5).fill("Lorem ipsum dolor sit amet");
+export const DrKittyVisi = "Menciptakan RT/RW yang makmur dan sejahtera dengan merberdayakan tikus dan hewan-hewan kecil lainnya dalam kegiatan yang prduktif dan menghasilkan. Serta menciptakan ketentraman antar-kucing dan hewan-hewan lainnya dalam kesepakatan yang menguntungkan di kedua belah pihak.";
+export const MrTeddyBearVisi = "Menciptakan RT/RW yang manis dan tentram melalui program-program yang memadukan setiap makhluk dalam keuntungan setimpal.";
+export const Misi = Array(5).fill("Lorem ipsum dolor sit amet");
 
 export default function Home() {
 
@@ -24,7 +24,7 @@ export default function Home() {
         </Alert>
         <HStack w="calc(100% - 0.6rem)" alignItems="stretch">
           <Calon maxWidth="50%" image="assets/paslon-1.jpg" nomor={1} nama="Dr. Kitty" visi={DrKittyVisi} misi={Misi} />
-          <Calon maxWidth="50%" image="assets/paslon-2.jpg" nomor={1} nama="Mr. Teddy Bear" visi={MrTeddyBearVisi} misi={Misi} />
+          <Calon maxWidth="50%" image="assets/paslon-2.jpg" nomor={2} nama="Mr. Teddy Bear" visi={MrTeddyBearVisi} misi={Misi} />
         </HStack>
       </VStack>
     </HStack>
