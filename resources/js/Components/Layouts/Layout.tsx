@@ -82,7 +82,7 @@ export default function Layout({ children, ...props }: ContainerProps) {
             </MenuButton>
             <MenuList zIndex={1000}>
               <StyledMenuList href="/">Beranda</StyledMenuList>
-              <StyledMenuList href="">Mulai Voting</StyledMenuList>
+              <StyledMenuList href="/pemilihan">Mulai Voting</StyledMenuList>
               <StyledMenuList href="">Hasil Pemilihan</StyledMenuList>
               <MenuDivider display={{ lg: "none" }} />
               <StyledMenuList href="/dashboard" linkMatch={/^\/dashboard\/.*/}>Dashboard</StyledMenuList>
