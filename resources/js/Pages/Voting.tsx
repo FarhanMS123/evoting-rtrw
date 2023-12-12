@@ -1,5 +1,6 @@
 import { Alert, AlertIcon, Button, Card, CardBody, Heading, Stack, useBoolean, useTheme } from "@chakra-ui/react";
 import { useMemo, type ReactNode, useState } from "react";
+import HeaderPemilu from "~/Components/Header";
 import Layout from "~/Components/Layouts/Layout";
 import Calon from "~/Components/pages/Home/Calon";
 
@@ -40,24 +41,18 @@ export default function Voting() {
   });
 
   return <>
-    <Alert status='info' mb={4}>
-      <AlertIcon />
-      Pemungutan suara masih belum dimulai. Mohon menunggu hingga waktu yang telah ditentukan.
-    </Alert>
-
     <Card mb={4}>
-      <CardBody>
-        <Heading size="md" textAlign="center">
-          Ketua RT 6 RW 3 Kelurahan Kembangan Utara
-        </Heading>
-      </CardBody>
+      <HeaderPemilu useBorder={false} />
     </Card>
 
+    { false && <Alert status='info' mb={4}>
+      <AlertIcon />
+      Pemungutan suara masih belum dimulai. Mohon menunggu hingga waktu yang telah ditentukan.
+    </Alert> }
+
     <Alert status='info' mb={4}>
       <AlertIcon />
-      Mohon pilih salah satu calon yang sesuai dengan kehendakmu dengan menekan gambar yang disediakan. Sebelum memilih, disarankan untuk
-      membaca visi-misi setiap calon untuk memastikan keputusan Anda. Setelah Anda yakin dan telah memilih, tekan tombol "Pilih" dan
-      suaramu akan dikumpulkan.
+      Tekan foto untuk memilih, kemudian tekan "Kirim Suara"
     </Alert>
 
     <Stack w="calc(100% - 0rem)" direction={{ base: "column", md: "row" }} alignItems="stretch" mb={4}>

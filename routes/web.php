@@ -21,6 +21,7 @@ require "auth.php";
 
 Route::inertia('/', "Home")->middleware("auth")->name("home");
 Route::inertia('/pemilihan', "Voting")->middleware("auth")->name("voting");
+Route::inertia("/hasil-pemilihan", "Result");
 
 Route::redirect("/dashboard", "/dashboard/profile")->middleware(["auth"]);
 Route::inertia("/dashboard/profile", "Dashboard/Profile")->middleware(["auth"]);
