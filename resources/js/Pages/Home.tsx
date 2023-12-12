@@ -1,4 +1,4 @@
-import { Card, HStack, VStack } from "@chakra-ui/react";
+import { Card, HStack, Stack, VStack } from "@chakra-ui/react";
 import { type ReactNode } from "react";
 import HeaderPemilu from "~/Components/Header";
 import Layout from "~/Components/Layouts/Layout";
@@ -16,10 +16,10 @@ export default function Home() {
         <Card w="full">
           <HeaderPemilu useBorder={false} />
         </Card>
-        <HStack w="calc(100% - 0.6rem)" alignItems="stretch">
-          <Calon maxWidth="50%" image="assets/paslon-1.jpg" nomor={1} nama="Dr. Kitty" visi={DrKittyVisi} misi={Misi} />
-          <Calon maxWidth="50%" image="assets/paslon-2.jpg" nomor={2} nama="Mr. Teddy Bear" visi={MrTeddyBearVisi} misi={Misi} />
-        </HStack>
+        <Stack direction={{ base: "column", md: "row" }} w="calc(100% - 0.6rem)" alignItems="stretch">
+          <Calon maxWidth={{ base: "full", md: "50%" }} image="assets/paslon-1.jpg" nomor={1} nama="Dr. Kitty" visi={DrKittyVisi} misi={Misi} />
+          <Calon maxWidth={{ base: "full", md: "50%" }} image="assets/paslon-2.jpg" nomor={2} nama="Mr. Teddy Bear" visi={MrTeddyBearVisi} misi={Misi} />
+        </Stack>
       </VStack>
     </HStack>
   </>;

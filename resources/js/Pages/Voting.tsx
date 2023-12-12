@@ -1,5 +1,5 @@
-import { Alert, AlertIcon, Button, Card, CardBody, Heading, Stack, useBoolean, useTheme } from "@chakra-ui/react";
-import { useMemo, type ReactNode, useState } from "react";
+import { Alert, AlertIcon, Button, Card, Wrap, WrapItem, useBoolean, useTheme } from "@chakra-ui/react";
+import { type ReactNode, useState } from "react";
 import HeaderPemilu from "~/Components/Header";
 import Layout from "~/Components/Layouts/Layout";
 import Calon from "~/Components/pages/Home/Calon";
@@ -55,10 +55,14 @@ export default function Voting() {
       Tekan foto untuk memilih, kemudian tekan "Kirim Suara"
     </Alert>
 
-    <Stack w="calc(100% - 0rem)" direction={{ base: "column", md: "row" }} alignItems="stretch" mb={4}>
-      <CalonButton maxWidth={{ base: "full", md: "50%" }} image="assets/paslon-1.jpg" nomor={1} nama="Dr. Kitty" { ...regVote(1) } />
-      <CalonButton maxWidth={{ base: "full", md: "50%" }} image="assets/paslon-2.jpg" nomor={2} nama="Mr. Teddy Bear" { ...regVote(2) } />
-    </Stack>
+    <Wrap w="full" justify="stretch" mb={4}>
+      <WrapItem flexGrow={1}>
+        <CalonButton w="full" image="assets/paslon-1.jpg" nomor={1} nama="Dr. Kitty" { ...regVote(1) } />
+      </WrapItem>
+      <WrapItem flexGrow={1}>
+        <CalonButton w="full" image="assets/paslon-2.jpg" nomor={2} nama="Mr. Teddy Bear" { ...regVote(2) } />
+      </WrapItem>
+    </Wrap>
 
     <Card mb={4}>
       <Button variant="ghost" { ...regVote(0) }>Abstain</Button>
