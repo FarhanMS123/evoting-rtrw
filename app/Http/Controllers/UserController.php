@@ -13,7 +13,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        return inertia("Dashboard/UserManagement");
+        $users = User::all();
+        return inertia("Dashboard/UserManagement", [
+            "users" => $users,
+        ]);
     }
 
     /**
@@ -21,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return $this->index();
     }
 
     /**
@@ -61,7 +64,12 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $users = User::all();
+        $warga = User::where("nik", $id)->firstOrFail();
+        return inertia("Dashboard/UserManagement", [
+            "users" => $users,
+            "warga" => $warga,
+        ]);
     }
 
     /**
@@ -69,7 +77,7 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return $this->show($id);
     }
 
     /**
@@ -85,6 +93,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $warga = User::where("nik", $id)->firstOrFail();
+        $warga->delete();
+        return back();
     }
 }

@@ -1,12 +1,20 @@
-import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { type InputProps, Card, CardBody, FormControl, FormLabel, Input, RadioGroup, Radio, HStack, InputGroup, InputRightAddon, IconButton, CardFooter, Button, FormHelperText, Checkbox, useToast } from "@chakra-ui/react";
-import { useForm } from "@inertiajs/react";
+import { ViewIcon, ViewOffIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { type InputProps, Card, CardBody, FormControl, FormLabel, Input, RadioGroup, Radio, HStack, InputGroup, InputRightAddon, IconButton, CardFooter, Button, FormHelperText, Checkbox, useToast, TableContainer, Table, Tr, Th, Thead, Tbody, Td } from "@chakra-ui/react";
+import { useForm, usePage } from "@inertiajs/react";
 import { useState, type ReactNode, useEffect, useRef } from "react";
 import DashboardLayout, { DashboardMenu } from "~/Components/Layouts/DashboardLayout";
-import { UserData } from "~/Components/Layouts/Layout";
-import { JadwalCard } from "~/Components/pages/Home/JadwalCard";
+import { DefaultPageProps, UserData } from "~/Components/Layouts/Layout";
 
 export default function UserManagement() {
+  return <>
+    <UserForm />
+    <UserTable />
+  </>;
+}
+
+UserManagement.layout = (page: ReactNode) => <DashboardLayout selectedMenu={DashboardMenu.KelolaWarga} maxW={["container.xl", "container.md"]}>{page}</DashboardLayout>;
+
+function UserForm () {
   const toast = useToast();
 
   const { setData, post, errors, recentlySuccessful, wasSuccessful, processing, ...props } = useForm<UserData>();
@@ -99,4 +107,56 @@ export default function UserManagement() {
   );
 }
 
-UserManagement.layout = (page: ReactNode) => <DashboardLayout selectedMenu={DashboardMenu.KelolaWarga} maxW={["container.xl", "container.md"]}>{page}</DashboardLayout>;
+export type UsersPageProps = {
+  users: UserData[];
+} & DefaultPageProps;
+
+function UserTable() {
+  const { props: { users } } = usePage<UsersPageProps>();
+
+  return (
+    <Card>
+      <CardBody>
+        <TableContainer>
+          <Table variant='simple' colorScheme="gray">
+            <Thead>
+              <Tr>
+                <Th>NIK</Th>
+                <Th>Nama</Th>
+                <Th>J. Kelamin</Th>
+                <Th>Alamat</Th>
+                <Th>Pekerjaan</Th>
+                <Th>Telepon</Th>
+                <Th>Status</Th>
+                <Th>Action</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              { users.map(user => (
+                <Tr>
+                  <Td>{ user.nik }</Td>
+                  <Td>{ user.nama }</Td>
+                  <Td>{ user.jenis_kelamin }</Td>
+                  <Td>{ user.alamat }</Td>
+                  <Td>{ user.pekerjaan }</Td>
+                  <Td>{ user.telepon }</Td>
+                  <Td>{ (() => {
+                    let status = [];
+                    if (user.is_admin) status.push("Admin");
+                    if (user.non_villager) status.push("Bukan Warga");
+                    else status.push("Warga");
+                    return status.join(", ");
+                  })() }</Td>
+                  <Td>
+                    <IconButton aria-label="Edit" icon={<EditIcon />} colorScheme="gray" />
+                    <IconButton aria-label="Delete" icon={<DeleteIcon />} colorScheme="gray" ml={1} />
+                  </Td>
+                </Tr>
+              )) }
+            </Tbody>
+          </Table>
+        </TableContainer>
+      </CardBody>
+    </Card>
+  );
+}
