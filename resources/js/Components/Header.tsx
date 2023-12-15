@@ -13,8 +13,8 @@ export default function HeaderPemilu({ size, useBorder, ...props }: {
   return (
     <CardHeader textAlign="center" {...(useBorder ? { borderBottomWidth: "0.125rem", borderColor: "gray.600" } : {})} { ...props }>
       <Heading {...HeadingProps}>PEMERINTAH DAERAH KHUSUS IBUKOTA JAKARTA</Heading>
-      <Heading {...HeadingProps}>KECAMATAN KEMBANGAN KELURAHAN KEMBANGAN UTARA</Heading>
-      <Heading {...HeadingProps} mt={4}>PEMILIHAN KETUA RT 6 RW 3</Heading>
+      <Heading {...HeadingProps}>KECAMATAN KEMBANGAN KELURAHAN KEMBANGAN UTARA RW 3</Heading>
+      <Heading {...HeadingProps} mt={4}>PEMILIHAN KETUA RT 6</Heading>
     </CardHeader>
   );
 }
