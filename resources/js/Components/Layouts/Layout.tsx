@@ -55,7 +55,7 @@ const WrapButton = ({ children, href, linkMatch, linkProps, wrapItemProps, ...pr
   return (
     <WrapItem {...wrapItemProps}>
       <Link href={href} {...linkProps}>
-        <Button colorScheme="blue" size='sm' isActive={isActive} {...props}>{ children }</Button>
+        <Button colorScheme="blue" size='sm' isActive={isActive} px={2} {...props}>{ children }</Button>
       </Link>
     </WrapItem>
   );
@@ -121,7 +121,7 @@ export default function Layout({ children, ...props }: ContainerProps) {
     </Card>
 
     <Container maxW="container.xl" py={6} {...props}>
-      <Wrap mb={6} display={{ lg: "none" }}>
+      <Wrap mb={6} display={{ lg: "none" }} sx={{ ".chakra-wrap__list": { gap: 0, } }}>
         <WrapButton href="/">Beranda</WrapButton>
         <WrapButton href="/pemilihan">Mulai Pemilihan</WrapButton>
         <WrapButton href="/hasil-pemilihan">Hasil Pemilihan</WrapButton>

@@ -1,5 +1,5 @@
 import { ViewIcon, ViewOffIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { type InputProps, Card, CardBody, FormControl, FormLabel, Input, RadioGroup, Radio, HStack, InputGroup, InputRightAddon, IconButton, CardFooter, Button, FormHelperText, Checkbox, useToast, TableContainer, Table, Tr, Th, Thead, Tbody, Td, TableCaption } from "@chakra-ui/react";
+import { type InputProps, Card, CardBody, FormControl, FormLabel, Input, RadioGroup, Radio, HStack, InputGroup, InputRightAddon, IconButton, CardFooter, Button, FormHelperText, Checkbox, useToast, TableContainer, Table, Tr, Th, Thead, Tbody, Td, TableCaption, useBoolean } from "@chakra-ui/react";
 import { Link, router, useForm, usePage } from "@inertiajs/react";
 import { useState, type ReactNode, useEffect, useRef } from "react";
 import DashboardLayout, { DashboardMenu } from "~/Components/Layouts/DashboardLayout";
@@ -24,7 +24,7 @@ function UserForm () {
   const { props: { users, warga } } = usePage<UsersPageProps>();
 
   const { setData, post, patch, errors, recentlySuccessful, wasSuccessful, processing, ...props } = useForm<UserData & {_nik? : string}>();
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, { toggle }] = useBoolean();
   const refForm = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -84,16 +84,16 @@ function UserForm () {
             </FormControl>
             <FormControl>
               <FormLabel>Telepon</FormLabel>
-              <Input variant="filled" name="telepon" type="tel" {...register("telepon")} />
+              <Input variant="filled" name="telepon" placeholder="+62XXXYYYYZZZZ" type="tel" {...register("telepon")} />
               { errors.telepon && <FormHelperText>{errors.telepon}</FormHelperText> }
             </FormControl>
             <FormControl isRequired={!warga} mt={2}>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input variant="filled" name="password" type={showPassword ? "text" : "password"} {...register()} />
+                <Input variant="filled" name="password" placeholder="************" type={showPassword ? "text" : "password"} {...register()} />
                 <InputRightAddon p={0}>
-                  {showPassword ? <IconButton aria-label="password showed" icon={<ViewIcon />} onClick={() => setShowPassword(false)} /> :
-                  <IconButton color="BlackAlpha.900" colorScheme="" aria-label="password hid" icon={<ViewOffIcon />} onClick={() => setShowPassword(true)} />}
+                  {showPassword ? <IconButton aria-label="password showed" icon={<ViewIcon />} onClick={() => toggle()} /> :
+                  <IconButton color="BlackAlpha.900" colorScheme="" aria-label="password hid" icon={<ViewOffIcon />} onClick={() => toggle()} />}
                 </InputRightAddon>
               </InputGroup>
               <FormHelperText>Harap catat dan simpan password dengan aman. Informasi ini akan disimpan dalam bentuk terenkripsi dan tidak akan muncul lagi.</FormHelperText>

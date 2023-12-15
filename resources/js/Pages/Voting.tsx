@@ -64,9 +64,9 @@ export default function Voting() {
       </WrapItem>
     </Wrap>
 
-    <Card mb={4}>
+    {/* <Card mb={4}>
       <Button variant="ghost" { ...regVote(0) }>Abstain</Button>
-    </Card>
+    </Card> */}
 
     <Card mt={16}>
       <Button variant="solid" isDisabled>Kirim Suara</Button>
