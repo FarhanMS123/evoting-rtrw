@@ -1,9 +1,14 @@
 import { ViewIcon, ViewOffIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { type InputProps, Card, CardBody, FormControl, FormLabel, Input, RadioGroup, Radio, HStack, InputGroup, InputRightAddon, IconButton, CardFooter, Button, FormHelperText, Checkbox, useToast, TableContainer, Table, Tr, Th, Thead, Tbody, Td } from "@chakra-ui/react";
-import { useForm, usePage } from "@inertiajs/react";
+import { type InputProps, Card, CardBody, FormControl, FormLabel, Input, RadioGroup, Radio, HStack, InputGroup, InputRightAddon, IconButton, CardFooter, Button, FormHelperText, Checkbox, useToast, TableContainer, Table, Tr, Th, Thead, Tbody, Td, TableCaption } from "@chakra-ui/react";
+import { Link, router, useForm, usePage } from "@inertiajs/react";
 import { useState, type ReactNode, useEffect, useRef } from "react";
 import DashboardLayout, { DashboardMenu } from "~/Components/Layouts/DashboardLayout";
 import { DefaultPageProps, UserData } from "~/Components/Layouts/Layout";
+
+export type UsersPageProps = {
+  warga?: UserData;
+  users: UserData[];
+} & DefaultPageProps;
 
 export default function UserManagement() {
   return <>
@@ -16,17 +21,11 @@ UserManagement.layout = (page: ReactNode) => <DashboardLayout selectedMenu={Dash
 
 function UserForm () {
   const toast = useToast();
+  const { props: { users, warga } } = usePage<UsersPageProps>();
 
-  const { setData, post, errors, recentlySuccessful, wasSuccessful, processing, ...props } = useForm<UserData>();
+  const { setData, post, patch, errors, recentlySuccessful, wasSuccessful, processing, ...props } = useForm<UserData & {_nik? : string}>();
   const [showPassword, setShowPassword] = useState(false);
   const refForm = useRef<HTMLFormElement>(null);
-
-  function register(name?: string) {
-    return {
-      onChange: (e) => setData((name ?? e.target.name) as keyof UserData, e.target.value),
-      isInvalid: errors[name as keyof UserData],
-    } as InputProps;
-  }
 
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
@@ -38,49 +37,57 @@ function UserForm () {
     }
     if (wasSuccessful) {
       toast({
-        description: "Penambahan informasi warga berhasil.",
+        description: warga ? "Pembaruan informasi warga berhasil." : "Penambahan informasi warga berhasil.",
         status: "success",
       });
       refForm.current?.reset();
     }
   }, [errors, wasSuccessful]);
 
+  function register(name?: string) {
+    return {
+      defaultValue: name && warga?.[name as keyof UserData],
+      onChange: (e) => setData((name ?? e.target.name) as keyof UserData, e.target.value),
+      isInvalid: errors[name as keyof UserData],
+    } as InputProps;
+  }
+
   return (
     <Card>
-      <form ref={refForm} onSubmit={(e) => {e.preventDefault(); post("");}}>
+      <form ref={refForm} onSubmit={(e) => {e.preventDefault(); (warga ? patch : post)("");}}>
         <CardBody>
-            <FormControl isRequired>
+            <FormControl isRequired={!warga}>
               <FormLabel>Nomor Induk Kependudukan</FormLabel>
               <Input variant="filled" name="nik" placeholder="8899003112230000" {...register("nik")} />
               { errors.nik && <FormHelperText>{errors.nik}</FormHelperText> }
             </FormControl>
-            <FormControl isRequired mt={2}>
+            <FormControl isRequired={!warga} mt={2}>
               <FormLabel>Nama Lengkap</FormLabel>
-              <Input variant="filled" name="nama" {...register()} />
+              <Input variant="filled" name="nama" {...register("nama")} />
             </FormControl>
-            <FormControl isRequired mt={2}>
+            <FormControl isRequired={!warga} mt={2}>
               <FormLabel>Jenis Kelamin</FormLabel>
-              <RadioGroup onChange={(v) => setData("jenis_kelamin", v as UserData["jenis_kelamin"])}>
+              <RadioGroup defaultValue={warga?.jenis_kelamin} onChange={(v) => setData("jenis_kelamin", v as UserData["jenis_kelamin"])}>
                 <HStack gap={4}>
                   <Radio value="laki-laki">Laki-Laki</Radio>
                   <Radio value="perempuan">Perempuan</Radio>
                 </HStack>
               </RadioGroup>
             </FormControl>
-            <FormControl isRequired mt={2}>
+            <FormControl isRequired={!warga} mt={2}>
               <FormLabel>Alamat</FormLabel>
-              <Input variant="filled" name="alamat" {...register()} />
+              <Input variant="filled" name="alamat" {...register("alamat")} />
             </FormControl>
-            <FormControl isRequired mt={2}>
+            <FormControl isRequired={!warga} mt={2}>
               <FormLabel>Pekerjaan</FormLabel>
-              <Input variant="filled" name="pekerjaan" {...register()} />
+              <Input variant="filled" name="pekerjaan" {...register("pekerjaan")} />
             </FormControl>
             <FormControl>
               <FormLabel>Telepon</FormLabel>
               <Input variant="filled" name="telepon" type="tel" {...register("telepon")} />
               { errors.telepon && <FormHelperText>{errors.telepon}</FormHelperText> }
             </FormControl>
-            <FormControl isRequired mt={2}>
+            <FormControl isRequired={!warga} mt={2}>
               <FormLabel>Password</FormLabel>
               <InputGroup>
                 <Input variant="filled" name="password" type={showPassword ? "text" : "password"} {...register()} />
@@ -94,22 +101,22 @@ function UserForm () {
             <FormControl mt={2}>
               <FormLabel>Lanjutan</FormLabel>
               <HStack gap={4}>
-                <Checkbox onChange={(e) => setData("is_admin", e.target.checked)}>Jadikan Admin</Checkbox>
-                <Checkbox onChange={(e) => setData("non_villager", e.target.checked)}>Bukan Warga</Checkbox>
+                <Checkbox defaultChecked={warga?.is_admin} onChange={(e) => setData("is_admin", e.target.checked)}>Jadikan Admin</Checkbox>
+                <Checkbox defaultChecked={warga?.non_villager} onChange={(e) => setData("non_villager", e.target.checked)}>Bukan Warga</Checkbox>
               </HStack>
             </FormControl>
         </CardBody>
         <CardFooter pt={0} display="flex" justifyContent="end">
-          <Button isLoading={processing} type="submit">Tambah</Button>
+          {!warga && <Button isLoading={processing} type="submit">Tambah</Button> }
+          { warga && <>
+            <Button variant="ghost" type="reset" mr={4} onClick={() => router.reload({})}>Reset</Button>
+            <Button isLoading={processing} type="submit">Perbarui</Button>
+          </> }
         </CardFooter>
       </form>
     </Card>
   );
 }
-
-export type UsersPageProps = {
-  users: UserData[];
-} & DefaultPageProps;
 
 function UserTable() {
   const { props: { users } } = usePage<UsersPageProps>();
@@ -117,6 +124,11 @@ function UserTable() {
   return (
     <Card>
       <CardBody>
+        <HStack w="full">
+          <Link href="/dashboard/users">
+            <Button variant="ghost">Tambah Warga</Button>
+          </Link>
+        </HStack>
         <TableContainer>
           <Table variant='simple' colorScheme="gray">
             <Thead>
@@ -148,8 +160,12 @@ function UserTable() {
                     return status.join(", ");
                   })() }</Td>
                   <Td>
-                    <IconButton aria-label="Edit" icon={<EditIcon />} colorScheme="gray" />
-                    <IconButton aria-label="Delete" icon={<DeleteIcon />} colorScheme="gray" ml={1} />
+                    <Link href={`/dashboard/users/${user.nik}`}>
+                      <IconButton aria-label="Edit" icon={<EditIcon />} colorScheme="gray" />
+                    </Link>
+                    <Link href={`/dashboard/users/${user.nik}`} method="delete">
+                      <IconButton aria-label="Delete" icon={<DeleteIcon />} colorScheme="gray" ml={1} />
+                    </Link>
                   </Td>
                 </Tr>
               )) }

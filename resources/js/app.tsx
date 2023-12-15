@@ -3,7 +3,7 @@ import { createInertiaApp } from '@inertiajs/react';
 import { createRoot } from "react-dom/client";
 import { ChakraProvider, type ContainerProps, extendTheme, withDefaultColorScheme } from '@chakra-ui/react';
 import { type ReactNode } from 'react';
-import Layout from './Components/Layouts/Layout';
+import { Provider } from 'jotai';
 
 export type CreateInertiaAppOptions = Parameters<typeof createInertiaApp>[0];
 export type SetupOpts = Parameters<CreateInertiaAppOptions["setup"]>[0];
@@ -44,7 +44,9 @@ function Providers({ children }: {
         }
       }}
     >
-      { children }
+      <Provider>
+        { children }
+      </Provider>
     </ChakraProvider>
   </>;
 }

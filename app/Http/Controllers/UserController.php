@@ -85,7 +85,21 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            "nik" => ["nullable", "digits:16", "unique:users,nik"],
+            "nama" => ["nullable"],
+            "alamat" => ["nullable"],
+            "pekerjaan" => ["nullable"],
+            "telepon" => ["nullable", "unique:users,telepon"],
+            "password" => ["nullable"],
+            "jenis_kelamin" => ["nullable", Rule::in(["laki-laki", "perempuan"])],
+            "is_admin" => ["nullable", "boolean"],
+            "non_villager" => ["nullable", "boolean"],
+        ]);
+        $warga = User::where("nik", $id)->firstOrFail();
+        $warga->update($data);
+        if ($request->has("nik")) return redirect("/dashboard/users/" . $request->input("nik"));
+        return back();
     }
 
     /**
@@ -95,6 +109,6 @@ class UserController extends Controller
     {
         $warga = User::where("nik", $id)->firstOrFail();
         $warga->delete();
-        return back();
+        return redirect("/dashboard/users");
     }
 }
