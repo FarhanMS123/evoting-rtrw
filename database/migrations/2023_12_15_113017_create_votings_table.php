@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string("token");
             $table->string("identifier")->nullable(); // TOKEN_NIK
             $table->string("verifier")->nullable(); // TOKEN_NIK_VOTE
-            $table->number("vote");
+            $table->integer("vote");
 
             $table->timestamps();
             $table->primary(["token"]);

@@ -30,6 +30,6 @@ class Voting extends Model
     ];
 
     public function peserta(): HasOne {
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'nonce_voting', "token");
     }
 }

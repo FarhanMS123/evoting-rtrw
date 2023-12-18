@@ -29,6 +29,7 @@ class User extends Authenticatable
         "telepon",
         "jenis_kelamin",
         'password',
+        'nonce_voting',
 
         "is_admin",
         "non_villager",
@@ -55,10 +56,10 @@ class User extends Authenticatable
     ];
 
     public function calon(): HasOne {
-        return $this->hasOne(Calon::class);
+        return $this->hasOne(Calon::class, "nik", "nik");
     }
 
     public function vote(): BelongsTo {
-        return $this->belongsTo(Voting::class);
+        return $this->belongsTo(Voting::class, 'nonce_voting', "token");
     }
 }
