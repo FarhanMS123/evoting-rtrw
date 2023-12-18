@@ -53,7 +53,7 @@ class CalonSeeder extends Seeder
         \App\Models\Calon::create([
             'nomor' => 2,
             "nik" => "8899003112230902",
-            'photo' => "/storage/paslon-1.jpg",
+            'photo' => "/storage/paslon-2.jpg",
             'visi' => "Menciptakan RT/RW yang manis dan tentram melalui program-program yang memadukan setiap makhluk dalam keuntungan setimpal.",
             'misi' => [],
         ]);
