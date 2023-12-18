@@ -19,17 +19,5 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
-        \App\Models\User::create([
-            "nik" => "8899003112230000",
-            "nama" => "Default Admin",
-            "alamat" => "Jl.",
-            "pekerjaan" => "Admin",
-            "telepon" => "+62",
-            "jenis_kelamin" => "laki-laki",
-            'password' => "TestPass123!",
-
-            "is_admin" => true,
-            "non_villager" => true,
-        ]);
     }
 }

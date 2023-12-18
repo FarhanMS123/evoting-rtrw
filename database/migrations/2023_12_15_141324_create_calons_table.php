@@ -13,14 +13,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('calons', function (Blueprint $table) {
-            $table->id("nomor");
-            $table->string("nik");
+            $table->id("nomor"); // primary key
+            $table->string("nik"); // foreign key
             $table->string("photo");
             $table->text("visi");
             $table->json("misi")->default(new Expression("(JSON_ARRAY())"));
 
             $table->timestamps();
-            $table->foreign("nik")->references("id")->on("users")->onUpdate('cascade')->onDelete('cascade');;
+            $table->foreign("nik")->references("nik")->on("users")->onUpdate('cascade')->onDelete('cascade');
         });
     }
 

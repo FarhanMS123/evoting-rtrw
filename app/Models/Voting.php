@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Voting extends Model
 {
@@ -28,4 +29,7 @@ class Voting extends Model
         'verifier' => 'hashed',
     ];
 
+    public function peserta(): HasOne {
+        return $this->hasOne(User::class);
+    }
 }
