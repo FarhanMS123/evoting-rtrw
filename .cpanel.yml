@@ -4,4 +4,6 @@ deployment:
     - export DEPLOYPATH=/home/rt6p7315/public_html
     - rm -Rfd $DEPLOYPATH/build
     - cp -R $PWD/public/build $DEPLOYPATH/
+    - ln -s $PWD/storage/app/public $PWD/public/storage
+    - ln -s $PWD/storage/app/public $DEPLOYPATH/storage
     # - ln -s $PWD/public $DEPLOYPATH
