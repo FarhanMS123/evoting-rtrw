@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\UniversalController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VotingController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -21,8 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 require "auth.php";
 
 Route::get('/', [UniversalController::class, "showHome"])->middleware("auth")->name("home");
-Route::inertia('/pemilihan', "Voting")->middleware("auth")->name("voting");
-Route::inertia("/hasil-pemilihan", "Result");
+Route::get('/pemilihan', [VotingController::class, "create"])->middleware("auth")->name("voting");
+Route::get("/hasil-pemilihan", [VotingController::class, "index"]);
 
 Route::redirect("/dashboard", "/dashboard/profile")->middleware(["auth"]);
 Route::inertia("/dashboard/profile", "Dashboard/Profile")->middleware(["auth"]);

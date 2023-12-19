@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Calon;
 use Illuminate\Http\Request;
 
 class VotingController extends Controller
@@ -11,7 +12,7 @@ class VotingController extends Controller
      */
     public function index()
     {
-        //
+        return inertia("Result");
     }
 
     /**
@@ -19,7 +20,10 @@ class VotingController extends Controller
      */
     public function create()
     {
-        //
+        $calons = Calon::with(["user"])->get();
+        return inertia("Voting", [
+            "calons" => $calons,
+        ]);
     }
 
     /**

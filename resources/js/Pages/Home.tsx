@@ -30,7 +30,7 @@ export default function Home() {
         </Card>
         <Wrap w="full" alignItems="stretch">
           { calons.map((c) => (
-            <WrapItem w={{base: "full", md: "calc(50% - 0.3rem)"}} flexGrow={0} flexShrink={0}>
+            <WrapItem w={{base: "full", md: "calc(50% - 0.3rem)"}} flexGrow={0} flexShrink={0} key={ c.nomor }>
               <Calon image={ c.photo } nomor={c.nomor} nama={ c.user.nama } visi={ c.visi } misi={ c.misi } w="full" flexGrow={0} h="full" />
             </WrapItem>
           )) }

@@ -1,8 +1,10 @@
-import { Alert, AlertIcon, Button, Card, Wrap, WrapItem, useBoolean, useTheme } from "@chakra-ui/react";
+import { Alert, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogHeader, AlertDialogOverlay, AlertIcon, Button, Card, Wrap, WrapItem, useBoolean, useTheme } from "@chakra-ui/react";
+import { useForm, usePage } from "@inertiajs/react";
 import { type ReactNode, useState } from "react";
 import HeaderPemilu from "~/Components/Header";
 import Layout from "~/Components/Layouts/Layout";
 import Calon from "~/Components/pages/Home/Calon";
+import { CalonPageProps } from "./Home";
 
 const CalonButton = ({ isActive, ...props }: {
   isActive?: boolean;
@@ -33,6 +35,8 @@ const CalonButton = ({ isActive, ...props }: {
 };
 
 export default function Voting() {
+  const { props: { calons } } = usePage<CalonPageProps>();
+  // const { setData, post, errors } = useForm<{ vote: number | null; }>();
   const [vote, setVote] = useState<number | null>(null);
 
   const regVote = (id: number) => ({
@@ -56,12 +60,11 @@ export default function Voting() {
     </Alert>
 
     <Wrap w="full" justify="stretch" mb={4}>
-      <WrapItem flexGrow={1}>
-        <CalonButton w="full" image="assets/paslon-1.jpg" nomor={1} nama="Dr. Kitty" { ...regVote(1) } />
-      </WrapItem>
-      <WrapItem flexGrow={1}>
-        <CalonButton w="full" image="assets/paslon-2.jpg" nomor={2} nama="Mr. Teddy Bear" { ...regVote(2) } />
-      </WrapItem>
+      { calons.map((calon) => (
+        <WrapItem flexGrow={1} key={calon.nomor}>
+          <CalonButton w="full" image={ calon.photo } nomor={ calon.nomor } nama={ calon.user.nama } { ...regVote(calon.nomor) } />
+        </WrapItem>
+      )) }
     </Wrap>
 
     {/* <Card mb={4}>
@@ -69,8 +72,18 @@ export default function Voting() {
     </Card> */}
 
     <Card mt={16}>
-      <Button variant="solid" isDisabled>Kirim Suara</Button>
+      <Button variant="solid" isDisabled={vote == null}
+        onClick={(ev) => {}}
+      >Kirim Suara</Button>
     </Card>
+
+    <AlertDialog>
+      <AlertDialogOverlay />
+      <AlertDialogContent>
+        <AlertDialogHeader>Sudah yakin dengan pilihan Anda?</AlertDialogHeader>
+        <AlertDialogBody></AlertDialogBody>
+      </AlertDialogContent>
+    </AlertDialog>
 
   </>;
 }
