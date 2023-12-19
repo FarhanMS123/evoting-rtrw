@@ -56,7 +56,7 @@ export default function Voting() {
   }, [vote]);
 
   useEffect(() => {
-    if (errors) {
+    if (Object.keys(errors).length > 0) {
       console.log("Post Vote", errors);
       toast({
         status: "error",
