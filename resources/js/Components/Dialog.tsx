@@ -29,20 +29,16 @@ export function DialogFooter({cancelText, okText, linkText, linkHref, props, can
 }
 
 export function useDialog() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = useRef();
+  const { isOpen, onOpen, onClose, ...use_disclosure } = useDisclosure();
+  const cancelRef = useRef<HTMLButtonElement>(null);
 
-  return { isOpen, onOpen, onClose, cancelRef };
+  return { isOpen, onOpen, onClose, cancelRef, ...use_disclosure };
 }
 
-export function DialogSkeleton({header, children, footer, link, cancel, ok, props, ...rootProps}: {
+export function DialogSkeleton({header, children, footer, props, ...rootProps}: {
   header?: ReactNode;
   children: ReactNode;
   footer?: ReactNode;
-
-  link?: ReactNode;
-  ok?: ReactNode | false;
-  cancel?: ReactNode | false;
 
   props?: {
     overlay?: Parameters<typeof AlertDialogOverlay>[0] | false;
@@ -63,10 +59,7 @@ export function DialogSkeleton({header, children, footer, link, cancel, ok, prop
         { props.close !== false && <AlertDialogCloseButton {...props.close} /> }
 
         <AlertDialogBody {...props.body}>{ children }</AlertDialogBody>
-        { footer !== false && <>
-          { !footer && <DialogFooter cancelRef={null} /> }
-          { footer && <AlertDialogFooter {...props.footer}>{ footer }</AlertDialogFooter> }
-        </> }
+        <AlertDialogFooter {...props.footer}>{ footer }</AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Calon;
+use App\Models\Voting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class VotingController extends Controller
 {
@@ -18,10 +20,12 @@ class VotingController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
+        $user = $request->user();
         $calons = Calon::with(["user"])->get();
         return inertia("Voting", [
+            "token" => $user->nonce_voting,
             "calons" => $calons,
         ]);
     }
@@ -31,7 +35,27 @@ class VotingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = $request->user();
+
+        if ($user->nonce_voting) return back()->withErrors([
+            "vote" => "Sudah Memilih"
+        ]);
+
+        $token = Str::random(6);
+
+        Voting::create([
+            'token' => $token,
+            'identifier' => $token . "_" . $user->nik,
+            'verifier' => $token . "_" . $user->nik . "_" . $request->input("vote"),
+            'vote' => $request->input("vote"),
+        ]);
+
+        $user->update([
+            "nonce_voting" => $token,
+        ]);
+
+        session()->flash('token', $token);
+        return back();
     }
 
     /**

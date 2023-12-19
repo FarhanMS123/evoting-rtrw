@@ -23,6 +23,7 @@ require "auth.php";
 
 Route::get('/', [UniversalController::class, "showHome"])->middleware("auth")->name("home");
 Route::get('/pemilihan', [VotingController::class, "create"])->middleware("auth")->name("voting");
+Route::post('/pemilihan', [VotingController::class, "store"])->middleware("auth");
 Route::get("/hasil-pemilihan", [VotingController::class, "index"]);
 
 Route::redirect("/dashboard", "/dashboard/profile")->middleware(["auth"]);

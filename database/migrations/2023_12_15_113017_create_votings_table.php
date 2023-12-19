@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('votings', function (Blueprint $table) {
             $table->string("token");
-            $table->string("identifier")->nullable(); // TOKEN_NIK
-            $table->string("verifier")->nullable(); // TOKEN_NIK_VOTE
+            $table->string("identifier")->nullable(); // TOKEN_NIK      | TOKEN_NIK_PIN
+            $table->string("verifier")->nullable();   // TOKEN_NIK_VOTE | TOKEN_NIK_PIN_VOTE
             $table->integer("vote");
 
             $table->timestamps();
