@@ -1,4 +1,4 @@
-import { Alert, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogHeader, AlertDialogOverlay, AlertIcon, Button, Card, CardBody, Heading, Text, Wrap, WrapItem, useBoolean, useTheme } from "@chakra-ui/react";
+import { Alert, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogHeader, AlertDialogOverlay, AlertIcon, Button, Card, CardBody, Heading, Text, Wrap, WrapItem, useBoolean, useTheme, useToast } from "@chakra-ui/react";
 import { useForm, usePage } from "@inertiajs/react";
 import { type ReactNode, useState, useMemo, useEffect } from "react";
 import HeaderPemilu from "~/Components/Header";
@@ -44,6 +44,7 @@ type TokenCalonPageProps = {
 
 export default function Voting() {
   const { props: { calons, token } } = usePage<TokenCalonPageProps>();
+  const toast = useToast();
   const { isOpen, onClose, onOpen, cancelRef } = useDialog();
   const { setData, post, errors, wasSuccessful } = useForm<{ vote: number | false | null; }>();
   const [vote, setVote] = useState<CalonData | false | null>(null);
@@ -53,6 +54,16 @@ export default function Voting() {
       vote: (vote as CalonData | null)?.nomor ?? (vote as false | null),
     });
   }, [vote]);
+
+  useEffect(() => {
+    if (errors) {
+      console.log("Post Vote", errors);
+      toast({
+        status: "error",
+        description: `Terjadi masalah saat memasukan suara.${ token && " Suara Anda sepertinya telah tercatat." } Lihat console untuk mengevaluasi lebih lanjut.`
+      });
+    }
+  }, [errors]);
 
   const regVote = (curr: CalonData) => ({
     isActive: (vote as CalonData | null)?.nik == curr.nik,
