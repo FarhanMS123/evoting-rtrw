@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UniversalController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
@@ -19,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 require "auth.php";
 
-Route::inertia('/', "Home")->middleware("auth")->name("home");
+Route::get('/', [UniversalController::class, "showHome"])->middleware("auth")->name("home");
 Route::inertia('/pemilihan', "Voting")->middleware("auth")->name("voting");
 Route::inertia("/hasil-pemilihan", "Result");
 

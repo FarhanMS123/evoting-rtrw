@@ -13,8 +13,8 @@ class CalonSeeder extends Seeder
      */
     public function run(): void
     {
-        File::copy(public_path("assets/paslon-1.jpg"), storage_path('app/public/paslon-1.jpg'));
-        File::copy(public_path("assets/paslon-2.jpg"), storage_path('app/public/paslon-2.jpg'));
+        // File::copy(public_path("assets/paslon-1.jpg"), storage_path('app/public/paslon-1.jpg'));
+        // File::copy(public_path("assets/paslon-2.jpg"), storage_path('app/public/paslon-2.jpg'));
 
         \App\Models\User::create([
             "nik" => "8899003112230901",
@@ -34,7 +34,13 @@ class CalonSeeder extends Seeder
             "nik" => "8899003112230901",
             'photo' => "/storage/paslon-1.jpg",
             'visi' => "Menciptakan RT/RW yang makmur dan sejahtera dengan merberdayakan tikus dan hewan-hewan kecil lainnya dalam kegiatan yang prduktif dan menghasilkan. Serta menciptakan ketentraman antar-kucing dan hewan-hewan lainnya dalam kesepakatan yang menguntungkan di kedua belah pihak.",
-            'misi' => [],
+            'misi' => [
+                "lorem ipsum dolor sit amet",
+                "lorem ipsum dolor sit amet",
+                "lorem ipsum dolor sit amet",
+                "lorem ipsum dolor sit amet",
+                "lorem ipsum dolor sit amet",
+            ],
         ]);
 
         \App\Models\User::create([
@@ -55,7 +61,13 @@ class CalonSeeder extends Seeder
             "nik" => "8899003112230902",
             'photo' => "/storage/paslon-2.jpg",
             'visi' => "Menciptakan RT/RW yang manis dan tentram melalui program-program yang memadukan setiap makhluk dalam keuntungan setimpal.",
-            'misi' => [],
+            'misi' => [
+                "lorem ipsum dolor sit amet",
+                "lorem ipsum dolor sit amet",
+                "lorem ipsum dolor sit amet",
+                "lorem ipsum dolor sit amet",
+                "lorem ipsum dolor sit amet",
+            ],
         ]);
     }
 }
