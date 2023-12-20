@@ -1,10 +1,24 @@
 import { Alert, AlertIcon, Card, CardBody, Heading, Table, TableContainer, Tag, Tbody, Td, Text, Tfoot, Th, Thead, Tr, Wrap, WrapItem } from "@chakra-ui/react";
+import { usePage } from "@inertiajs/react";
 import { type ReactNode } from "react";
 import HeaderPemilu from "~/Components/Header";
-import Layout from "~/Components/Layouts/Layout";
+import Layout, { type DefaultPageProps } from "~/Components/Layouts/Layout";
 import Calon from "~/Components/pages/Home/Calon";
+import { CalonData } from "./Home";
 
+type ResultData = {
+  votes: {
+    token: string;
+    vote: number;
+  }[];
+  left: number;
+  group: (CalonData & { suara: number; vote: number; })[]
+};
+
+type ResultPageProps = ResultData & DefaultPageProps;
 export default function Result() {
+  const { props: { votes, left, group } } = usePage<ResultPageProps>();
+
   return <>
     {/* <Card mb={4}>
       <HeaderPemilu useBorder={false} />
@@ -70,45 +84,26 @@ export default function Result() {
             </Tr>
           </Thead>
           <Tbody>
-            <Tr>
-              <Td fontWeight="bold">2EF4AB</Td>
-              <Td>2</Td>
-            </Tr>
-            <Tr>
-              <Td fontWeight="bold">AB7F21</Td>
-              <Td>1</Td>
-            </Tr>
-            <Tr>
-              <Td fontWeight="bold">C72EA0</Td>
-              <Td>1</Td>
-            </Tr>
-            <Tr>
-              <Td fontWeight="bold">992351</Td>
-              <Td>2</Td>
-            </Tr>
-            <Tr>
-              <Td fontWeight="bold">2DDDEF</Td>
-              <Td>1</Td>
-            </Tr>
+            { votes.map((vote) => (
+              <Tr key={vote.token}>
+                <Td fontWeight="bold" textTransform="uppercase">{ vote.token }</Td>
+                <Td>{ vote.vote }</Td>
+              </Tr>
+            )) }
           </Tbody>
           <Tfoot>
-            <Tr>
-              <Td>
-                <Tag mr="2">1</Tag>
-                <Text display="inline-block">Dr. Kitty</Text>
-              </Td>
-              <Td>12 suara</Td>
-            </Tr>
-            <Tr>
-              <Td>
-                <Tag mr="2">2</Tag>
-                <Text display="inline-block">Mr. Teddy Bear</Text>
-              </Td>
-              <Td>8 suara</Td>
-            </Tr>
+            { group.map( suara => (
+              <Tr key={suara.nomor}>
+                <Td>
+                  <Tag mr="2">{ suara.nomor }</Tag>
+                  <Text display="inline-block">{ suara.user.nama }</Text>
+                </Td>
+                <Td>{ suara.suara } suara</Td>
+              </Tr>
+            )) }
             <Tr>
               <Td fontWeight="bold">Tidak Memilih</Td>
-              <Td>10 peserta</Td>
+              <Td>{ left } peserta</Td>
             </Tr>
           </Tfoot>
         </Table>

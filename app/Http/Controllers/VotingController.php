@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Calon;
+use App\Models\User;
 use App\Models\Voting;
+use Illuminate\Database\Query\JoinClause;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -14,7 +16,22 @@ class VotingController extends Controller
      */
     public function index()
     {
-        return inertia("Result");
+        $votes = Voting::all();
+        // $group = Voting::groupBy("vote")->selectRaw("vote, count(vote) as suara")->get();
+        // $group = Calon::with(["user"])->leftJoin("votings", "calons.nomor", "=", "votings.vote")->get();
+        // $group = Calon::with(["user"])->leftJoin("votings", function (JoinClause $join) {
+        //     $join->on("calons.nomor", "=", "votings.vote")->groupBy("vote")->selectRaw("count(vote) as suara");
+        $group = Calon::with(["user"])->leftJoinSub(
+            Voting::groupBy("vote")->selectRaw("vote, count(vote) as suara"),
+            "votings",
+            "calons.nomor", "=", "votings.vote"
+        )->get();
+        $left = User::count() - Voting::count();
+        return inertia("Result", [
+            "votes" => $votes,
+            "group" => $group,
+            "left" => $left,
+        ]);
     }
 
     /**

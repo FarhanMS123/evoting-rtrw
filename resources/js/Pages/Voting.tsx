@@ -1,11 +1,12 @@
 import { Alert, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogHeader, AlertDialogOverlay, AlertIcon, Button, Card, CardBody, Heading, Text, Wrap, WrapItem, useBoolean, useTheme, useToast } from "@chakra-ui/react";
-import { useForm, usePage } from "@inertiajs/react";
+import { Link, useForm, usePage } from "@inertiajs/react";
 import { type ReactNode, useState, useMemo, useEffect } from "react";
 import HeaderPemilu from "~/Components/Header";
 import Layout from "~/Components/Layouts/Layout";
 import Calon from "~/Components/pages/Home/Calon";
 import { CalonData, CalonPageProps } from "./Home";
 import { DialogSkeleton, useDialog } from "~/Components/Dialog";
+import { ArrowForwardIcon } from "@chakra-ui/icons";
 
 const CalonButton = ({ isActive, isDisabled, ...props }: {
   isActive?: boolean;
@@ -43,6 +44,26 @@ type TokenCalonPageProps = {
 } & CalonPageProps;
 
 export default function Voting() {
+  const { props: { token } } = usePage<TokenCalonPageProps>();
+
+  return <>
+    <Card mb={4}>
+      <HeaderPemilu useBorder={false} />
+    </Card>
+
+    { false && <Alert status='info' mb={4}>
+      <AlertIcon />
+      Pemungutan suara masih belum dimulai. Mohon menunggu hingga waktu yang telah ditentukan.
+    </Alert> }
+
+    { !token && <VotingSession /> }
+    { token && <VotingToken /> }
+  </>;
+}
+
+Voting.layout = (page: ReactNode) => <Layout maxW={["container.xl", "container.lg"]}>{page}</Layout>;
+
+function VotingSession() {
   const { props: { calons, token } } = usePage<TokenCalonPageProps>();
   const toast = useToast();
   const { isOpen, onClose, onOpen, cancelRef } = useDialog();
@@ -60,7 +81,7 @@ export default function Voting() {
       console.log("Post Vote", errors);
       toast({
         status: "error",
-        description: `Terjadi masalah saat memasukan suara.${ token && " Suara Anda sepertinya telah tercatat." } Lihat console untuk mengevaluasi lebih lanjut.`
+        description: `Terjadi masalah saat memasukan suara. Lihat console untuk mengevaluasi lebih lanjut.`
       });
     }
   }, [errors]);
@@ -71,15 +92,6 @@ export default function Voting() {
   });
 
   return <>
-    <Card mb={4}>
-      <HeaderPemilu useBorder={false} />
-    </Card>
-
-    { false && <Alert status='info' mb={4}>
-      <AlertIcon />
-      Pemungutan suara masih belum dimulai. Mohon menunggu hingga waktu yang telah ditentukan.
-    </Alert> }
-
     <Alert status='info' mb={4}>
       <AlertIcon />
       Tekan foto untuk memilih, kemudian tekan "Kirim Suara"
@@ -88,7 +100,7 @@ export default function Voting() {
     <Wrap w="full" justify="stretch" mb={4}>
       { calons.map((calon) => (
         <WrapItem flexGrow={1} key={calon.nomor}>
-          <CalonButton w="full" image={ calon.photo } nomor={ calon.nomor } nama={ calon.user.nama } isDisabled={ !!token } { ...regVote(calon) } />
+          <CalonButton w="full" image={ calon.photo } nomor={ calon.nomor } nama={ calon.user.nama } { ...regVote(calon) } />
         </WrapItem>
       )) }
     </Wrap>
@@ -98,22 +110,12 @@ export default function Voting() {
     </Card> */}
 
     <Card mt={16}>
-      <Button variant="solid" isDisabled={vote == null || !!token}
+      <Button variant="solid"
         onClick={(ev) => onOpen()}
       >Kirim Suara</Button>
     </Card>
 
     {/* ********************************************************************************************* */}
-
-    { token && <Card mt={16}>
-      <CardBody>
-        <Alert>
-          <AlertIcon />
-          Gunakan kode berikut untuk melacak suara Anda. Pastikan suara Anda tidak berubah.
-        </Alert>
-        <Heading mt={4} textAlign="center" textTransform="uppercase">{ token }</Heading>
-      </CardBody>
-    </Card> }
 
     { !token && !wasSuccessful && <DialogSkeleton isOpen={isOpen} onClose={onClose}
       leastDestructiveRef={cancelRef}
@@ -142,4 +144,23 @@ export default function Voting() {
   </>;
 }
 
-Voting.layout = (page: ReactNode) => <Layout maxW={["container.xl", "container.lg"]}>{page}</Layout>;
+function VotingToken() {
+  const { props: { token } } = usePage<TokenCalonPageProps>();
+
+  return <>
+    <Alert mb={4}>
+      <AlertIcon />
+      Gunakan kode berikut untuk melacak suara Anda. Pastikan suara Anda tidak berubah.
+    </Alert>
+    <Card mb={4}>
+      <CardBody>
+        <Heading textAlign="center" textTransform="uppercase">{ token }</Heading>
+      </CardBody>
+    </Card>
+    <Card w="full">
+      <Link href="/hasil-pemilihan">
+        <Button variant="ghost" rightIcon={<ArrowForwardIcon />} w="full">Lacak suara Anda</Button>
+      </Link>
+    </Card>
+  </>;
+}

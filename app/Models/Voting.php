@@ -11,6 +11,8 @@ class Voting extends Model
     use HasFactory;
 
     protected $primaryKey = 'token';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     protected $fillable = [
         'token',
