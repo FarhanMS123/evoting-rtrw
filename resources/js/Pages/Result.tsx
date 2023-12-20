@@ -98,7 +98,7 @@ export default function Result() {
                   <Tag mr="2">{ suara.nomor }</Tag>
                   <Text display="inline-block">{ suara.user.nama }</Text>
                 </Td>
-                <Td>{ suara.suara } suara</Td>
+                <Td>{ suara.suara ?? 0 } suara</Td>
               </Tr>
             )) }
             <Tr>
