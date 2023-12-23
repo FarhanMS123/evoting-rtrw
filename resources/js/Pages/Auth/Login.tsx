@@ -3,6 +3,7 @@ import { Alert, AlertIcon, Button, Card, CardBody, CardHeader, Center, FormContr
 import { useForm } from "@inertiajs/react";
 import { useState } from "react";
 import HeaderPemilu from "~/Components/Header";
+import Footer from "~/Components/Layouts/Footer";
 
 type Form = { nik: string; password: string; login?: boolean; };
 
@@ -11,8 +12,8 @@ export default function Login() {
   const [showPassword, { toggle }] = useBoolean();
 
   return <>
-    <Center mt={24} mb={8}>
-      <Card maxW="calc(100% - 1rem)">
+    <Center mt={24} mb={8} flexDirection="column">
+      <Card maxW="calc(100% - 1rem)" position="relative">
         <HeaderPemilu />
         <CardBody>
           {(errors as Form).login == false && <Alert status='error' mb={4}>
@@ -39,6 +40,7 @@ export default function Login() {
               <Button type="submit">Login</Button>
             </HStack>
           </form>
+          <Footer isSticky={false} m={0} w="full" mt={4} boxShadow="none" border={1} borderColor="gray.200" borderStyle="solid" />
         </CardBody>
       </Card>
     </Center>

@@ -1,3 +1,4 @@
+/// <reference types="vite-plugin-svgr/client" />
 // import '~/bootstrap.js';
 import { createInertiaApp } from '@inertiajs/react';
 import { createRoot } from "react-dom/client";

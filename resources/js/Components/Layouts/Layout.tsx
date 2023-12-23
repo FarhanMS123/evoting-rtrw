@@ -1,6 +1,11 @@
-import { type ContainerProps, type MenuItemProps, type ButtonProps, Avatar, Button, Card, Container, HStack, Image, Menu, MenuButton, MenuItem, MenuList, useToast, MenuDivider, Wrap, WrapItem, WrapItemProps, Portal } from "@chakra-ui/react";
+/// <reference types="vite-plugin-svgr/client" />
+import { type ContainerProps, type MenuItemProps, type ButtonProps,
+    Avatar, Button, Card, Container, HStack, Image, Menu, MenuButton,
+    MenuItem, MenuList, useToast, MenuDivider, Wrap, WrapItem,
+    WrapItemProps, Portal } from "@chakra-ui/react";
 import { type InertiaLinkProps, Link, router, usePage } from "@inertiajs/react";
 import { useMemo } from "react";
+import Footer from "./Footer";
 
 const useLink = ({ href, linkMatch }: {
   href: string;
@@ -98,7 +103,6 @@ export default function Layout({ children, ...props }: ContainerProps) {
           <StyledButton href="/hasil-pemilihan">Hasil Pemilihan</StyledButton>
         </HStack>
         <HStack gap={0} ml="auto">
-          <StyledButton href="" isDisabled>Bantuan</StyledButton>
           <StyledButton href="/dashboard" linkMatch={/^\/dashboard\/.*/}>Dashboard</StyledButton>
           <Menu>
             <MenuButton as={Button} leftIcon={<Avatar name={ auth.user?.nama } size="sm" />} variant="ghost" colorScheme="gray">
@@ -111,7 +115,6 @@ export default function Layout({ children, ...props }: ContainerProps) {
                 <StyledMenuList href="/hasil-pemilihan">Hasil Pemilihan</StyledMenuList>
                 <MenuDivider display={{ lg: "none" }} />
                 <StyledMenuList href="/dashboard" linkMatch={/^\/dashboard\/.*/}>Dashboard</StyledMenuList>
-                <StyledMenuList href="" isDisabled>Bantuan</StyledMenuList>
                 <MenuItem onClick={() => router.post("/auth/logout")}>Keluar</MenuItem>
               </MenuList>
             </Portal>
@@ -130,5 +133,7 @@ export default function Layout({ children, ...props }: ContainerProps) {
 
       { children }
     </Container>
+
+    <Footer />
   </>;
 }

@@ -22,7 +22,8 @@
 
     "baseUrl": ".",
     "paths": {
-      "~/*": ["resources/js/*"]
+      "~/*": ["resources/js/*"],
+      "~assets/*": ["resources/assets/*"]
     }
   },
   "include": ["resources/js"],
