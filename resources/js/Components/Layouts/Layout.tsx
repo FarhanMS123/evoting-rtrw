@@ -90,7 +90,7 @@ export default function Layout({ children, ...props }: ContainerProps) {
   const toast = useToast({
     status: "error",
   });
-  const isAdmin = auth.user && Boolean(auth.user.is_admin);
+  const isAdmin = Boolean(auth.user?.is_admin);
 
   const doToast = () => toast({ description: "Waktu pemilihan masih belum dimulai. Mohon untuk menunggu hingga waktu yang telah ditentuan.", });
 

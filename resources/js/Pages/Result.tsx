@@ -1,10 +1,13 @@
 import { Alert, AlertIcon, Card, CardBody, Heading, Table, TableContainer, Tag, Tbody, Td, Text, Tfoot, Th, Thead, Tr, Wrap, WrapItem } from "@chakra-ui/react";
 import { usePage } from "@inertiajs/react";
-import { type ReactNode } from "react";
+import { useMemo, type ReactNode } from "react";
 import HeaderPemilu from "~/Components/Header";
 import Layout, { type DefaultPageProps } from "~/Components/Layouts/Layout";
 import Calon from "~/Components/pages/Home/Calon";
 import { CalonData } from "./Home";
+import { Pie } from "react-chartjs-2";
+import { type ChartData } from "chart.js";
+import 'chart.js/auto';
 
 type ResultData = {
   votes: {
@@ -16,8 +19,31 @@ type ResultData = {
 };
 
 type ResultPageProps = ResultData & DefaultPageProps;
+
+const rand256 = () => Math.floor(Math.random() * 256);
+const rand = (min: number, max: number) => Math.floor(min + (Math.random() * (max - min)));
 export default function Result() {
   const { props: { votes, left, group } } = usePage<ResultPageProps>();
+  const dataPie = useMemo(() => {
+    const ret = {
+      labels: ["Tidak Memilih"],
+      datasets: [{
+        data: [left],
+        backgroundColor: ["#34495e"],
+      }],
+    } as ChartData<"pie", number[], string>
+
+    group.forEach(suara => {
+      ret.labels!.push(suara.user.nama);
+      ret.datasets[0].data.push(suara.suara);
+      (ret.datasets[0].backgroundColor as string[]).push(`hsl(${ rand(0, 360) }, ${ rand(16, 100) }%, ${ rand(16, 100) }%)`)
+    });
+
+
+    console.log(ret);
+
+    return ret;
+  }, [votes, left, group]);
 
   return <>
     {/* <Card mb={4}>
@@ -107,6 +133,12 @@ export default function Result() {
             </Tr>
           </Tfoot>
         </Table>
+      </CardBody>
+    </Card>
+
+    <Card mb={4} height="2xs">
+      <CardBody display="flex" justifyContent="center">
+        <Pie data={dataPie} options={{ maintainAspectRatio: false }} />
       </CardBody>
     </Card>
   </>;

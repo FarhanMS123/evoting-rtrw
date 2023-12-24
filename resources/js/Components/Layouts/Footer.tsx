@@ -31,6 +31,7 @@ function Footer ({ isSticky, ...props }: {
   return (
     <Card m="1rem" w="calc(100% - 2rem)" { ...(isSticky && isNotEnough ? stickyProps : {})} {...props}>
       <CardBody display="flex" gap={8} justifyContent="center" alignItems="center">
+        <Text w="fit-content">Bantuan: </Text>
         <Text w="fit-content">
           <Icon as={Whatsapp} fill="#25D366" w={6} h={6} alignSelf="center" mb={"-0.5rem"} />
           <Link href="https://wa.me/+6271200001111" ml={2}>(+62) 712-0000-1111</Link>

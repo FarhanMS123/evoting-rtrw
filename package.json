@@ -11,9 +11,11 @@
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
         "@inertiajs/react": "^1.0.14",
+        "chart.js": "^4.4.1",
         "framer-motion": "^10.16.12",
         "jotai": "^2.6.0",
         "react": "^18.2.0",
+        "react-chartjs-2": "^5.2.0",
         "react-dom": "^18.2.0",
         "react-hook-form": "^7.48.2",
         "vite-plugin-svgr": "^4.2.0"
