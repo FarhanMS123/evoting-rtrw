@@ -35,7 +35,7 @@ export default function Result() {
 
     group.forEach(suara => {
       ret.labels!.push(suara.user.nama);
-      ret.datasets[0].data.push(suara.suara);
+      ret.datasets[0].data.push(suara.suara ?? 0);
       (ret.datasets[0].backgroundColor as string[]).push(`hsl(${ rand(0, 360) }, ${ rand(16, 100) }%, ${ rand(16, 100) }%)`)
     });
 
