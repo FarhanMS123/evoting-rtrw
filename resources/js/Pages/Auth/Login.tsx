@@ -37,6 +37,7 @@ export default function Login() {
               </InputGroup>
             </FormControl>
             <HStack mt={4} justifyContent="end">
+              <Button variant='link' mr={2}>Lupa password?</Button>
               <Button type="submit">Login</Button>
             </HStack>
           </form>

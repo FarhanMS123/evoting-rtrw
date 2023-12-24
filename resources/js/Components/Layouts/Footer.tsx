@@ -33,7 +33,7 @@ function Footer ({ isSticky, ...props }: {
       <CardBody display="flex" gap={8} justifyContent="center" alignItems="center">
         <Text w="fit-content">
           <Icon as={Whatsapp} fill="#25D366" w={6} h={6} alignSelf="center" mb={"-0.5rem"} />
-          <Link href="https://wa.me/+6281200001111" ml={2}>(+62) 812-0000-1111</Link>
+          <Link href="https://wa.me/+6271200001111" ml={2}>(+62) 712-0000-1111</Link>
         </Text>
         <Text w="fit-content">
           <Icon as={EmailIcon} color="#aaaaaa" w={6} h={6} alignSelf="center" />

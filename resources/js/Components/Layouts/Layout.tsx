@@ -90,6 +90,7 @@ export default function Layout({ children, ...props }: ContainerProps) {
   const toast = useToast({
     status: "error",
   });
+  const isAdmin = auth.user && Boolean(auth.user.is_admin);
 
   const doToast = () => toast({ description: "Waktu pemilihan masih belum dimulai. Mohon untuk menunggu hingga waktu yang telah ditentuan.", });
 
@@ -98,12 +99,16 @@ export default function Layout({ children, ...props }: ContainerProps) {
       <HStack>
         <Image src="/assets/logo-nm.png" boxSize={10} />
         <HStack gap={0} ml={2}>
-          <StyledButton href="/">Beranda</StyledButton>
+          { !isAdmin && <StyledButton href="/">Beranda</StyledButton> }
+          { isAdmin && <>
+            <StyledButton href="/dashboard/users">Kelola Warga</StyledButton>
+            <StyledButton href="/dashboard/calons">Kelola Calon</StyledButton>
+          </> }
           <StyledButton href="/pemilihan">Mulai Pemilihan</StyledButton>
           <StyledButton href="/hasil-pemilihan">Hasil Pemilihan</StyledButton>
         </HStack>
         <HStack gap={0} ml="auto">
-          <StyledButton href="/dashboard" linkMatch={/^\/dashboard\/.*/}>Dashboard</StyledButton>
+          {/* <StyledButton href="/dashboard" linkMatch={/^\/dashboard\/.*$/}>Dashboard</StyledButton> */}
           <Menu>
             <MenuButton as={Button} leftIcon={<Avatar name={ auth.user?.nama } size="sm" />} variant="ghost" colorScheme="gray">
               { auth.user?.nama }
@@ -124,12 +129,16 @@ export default function Layout({ children, ...props }: ContainerProps) {
     </Card>
 
     <Container maxW="container.xl" py={6} {...props}>
-      <Wrap mb={6} display={{ lg: "none" }} sx={{ ".chakra-wrap__list": { gap: 0, } }}>
+      <Wrap mb={2} display={{ lg: "none" }} sx={{ ".chakra-wrap__list": { gap: 0, } }}>
         <WrapButton href="/">Beranda</WrapButton>
         <WrapButton href="/pemilihan">Mulai Pemilihan</WrapButton>
         <WrapButton href="/hasil-pemilihan">Hasil Pemilihan</WrapButton>
         <WrapButton href="#1" onClick={(e) => {e.preventDefault(); router.post("/auth/logout");}}>Keluar</WrapButton>
       </Wrap>
+      { isAdmin && <Wrap mb={6} display={{ lg: "none" }} sx={{ ".chakra-wrap__list": { gap: 0, } }}>
+        <WrapButton href="/dashboard/users" colorScheme="pink">Kelola Warga</WrapButton>
+        <WrapButton href="/dashboard/calons" colorScheme="pink">Kelola Calon</WrapButton>
+      </Wrap> }
 
       { children }
     </Container>

@@ -22,11 +22,9 @@ export type CalonPageProps = {
 export default function Home() {
   const { props: { calons, auth } } = usePage<CalonPageProps>();
 
+  if (auth.user && Boolean(auth.user.is_admin)) return (<></>);
+
   return <>
-    { auth.user && Boolean(auth.user.is_admin) && <HStack mb={4}>
-      <Button colorScheme="pink" as={Link} href="/dashboard/users">Kelola Warga</Button>
-      <Button colorScheme="pink" as={Link} href="/dashboard/calons">Kelola Calon</Button>
-    </HStack> }
     <HStack alignItems="start">
       <VStack flexGrow={1} alignItems="flex-start">
         <Card w="full">

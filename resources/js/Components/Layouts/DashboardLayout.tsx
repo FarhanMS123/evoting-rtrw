@@ -17,23 +17,23 @@ export default function DashboardLayout({ children, selectedMenu, ...props }: {
   return (
     <Layout {...props}>
       <VStack gap={4} alignItems="stretch">
-        <Card p={2}>
-          <Tabs variant="soft-rounded" w="full" index={selectedMenu}>
+        <Card p={2} overflow="auto">
+          <Tabs variant="soft-rounded" index={selectedMenu}>
             <TabList>
               <Link href="/dashboard/profile">
-                <Tab>Profile</Tab>
+                <Tab whiteSpace="nowrap">Profile</Tab>
               </Link>
               { Boolean(auth.user?.is_admin) && <>
                 <Link href="/dashboard/users">
-                  <Tab>Kelola Warga</Tab>
+                  <Tab whiteSpace="nowrap">Kelola Warga</Tab>
                 </Link>
                 <Link href="#">
-                  <Tab>Kelola Calon</Tab>
+                  <Tab whiteSpace="nowrap">Kelola Calon</Tab>
                 </Link>
               </> }
               { (auth.user?.is_admin || app_debug) &&
                 <Link href="/dashboard/debug">
-                  <Tab>Debug</Tab>
+                  <Tab whiteSpace="nowrap">Debug</Tab>
                 </Link>
               }
             </TabList>
