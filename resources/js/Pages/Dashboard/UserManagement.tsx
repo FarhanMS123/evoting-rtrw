@@ -1,5 +1,5 @@
 import { ViewIcon, ViewOffIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { type InputProps, Card, CardBody, FormControl, FormLabel, Input, RadioGroup, Radio, HStack, InputGroup, InputRightAddon, IconButton, CardFooter, Button, FormHelperText, Checkbox, useToast, TableContainer, Table, Tr, Th, Thead, Tbody, Td, TableCaption, useBoolean } from "@chakra-ui/react";
+import { type InputProps, Card, CardBody, FormControl, FormLabel, Input, RadioGroup, Radio, HStack, InputGroup, InputRightAddon, IconButton, CardFooter, Button, FormHelperText, Checkbox, useToast, TableContainer, Table, Tr, Th, Thead, Tbody, Td, TableCaption, useBoolean, CardHeader, Heading, Text } from "@chakra-ui/react";
 import { Link, router, useForm, usePage } from "@inertiajs/react";
 import { useState, type ReactNode, useEffect, useRef } from "react";
 import DashboardLayout, { DashboardMenu } from "~/Components/Layouts/DashboardLayout";
@@ -17,7 +17,7 @@ export default function UserManagement() {
   </>;
 }
 
-UserManagement.layout = (page: ReactNode) => <DashboardLayout selectedMenu={DashboardMenu.KelolaWarga} maxW={["container.xl", "container.md"]}>{page}</DashboardLayout>;
+UserManagement.layout = (page: ReactNode) => <DashboardLayout selectedMenu={DashboardMenu.KelolaWarga} maxW={["container.xl", "container.md"]} disableFooter>{page}</DashboardLayout>;
 
 function UserForm () {
   const toast = useToast();
@@ -54,6 +54,9 @@ function UserForm () {
 
   return (
     <Card>
+      <CardHeader bgColor="teal.400">
+        <Text fontSize="3xl" color="white">Kelola Data Warga</Text>
+      </CardHeader>
       <form ref={refForm} onSubmit={(e) => {e.preventDefault(); (warga ? patch : post)("");}}>
         <CardBody>
             <FormControl isRequired={!warga}>

@@ -1,6 +1,7 @@
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Alert, AlertIcon, Button, Card, CardBody, CardHeader, Center, FormControl, FormLabel, HStack, Heading, IconButton, Image, Input, InputGroup, InputRightAddon, useBoolean } from "@chakra-ui/react";
 import { useForm } from "@inertiajs/react";
+import { QrCode } from "lucide-react";
 import { useState } from "react";
 import HeaderPemilu from "~/Components/Header";
 import Footer from "~/Components/Layouts/Footer";
@@ -39,9 +40,12 @@ export default function Login() {
             <HStack mt={4} justifyContent="end">
               <Button variant='link' mr={2}>Lupa password?</Button>
               <Button type="submit">Login</Button>
+              <IconButton aria-label="Login with QR Code" icon={<QrCode />} variant="ghost" />
             </HStack>
           </form>
-          <Footer isSticky={false} m={0} w="full" mt={4} boxShadow="none" border={1} borderColor="gray.200" borderStyle="solid" />
+          <Footer isSticky={false} m={0} w="full" mt={4} boxShadow="none" border={1} borderColor="gray.200" borderStyle="solid"
+            bodyProps={{ flexDirection: ["column", "row"], alignItems: ["left", "center"] }}
+          />
         </CardBody>
       </Card>
     </Center>

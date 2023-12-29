@@ -85,7 +85,9 @@ export type DefaultPageProps = {
   };
 };
 
-export default function Layout({ children, ...props }: ContainerProps) {
+export default function Layout({ children, disableFooter, ...props }: {
+  disableFooter?: boolean;
+} & ContainerProps) {
   const { props: { auth } } = usePage<DefaultPageProps>();
   const toast = useToast({
     status: "error",
@@ -143,6 +145,6 @@ export default function Layout({ children, ...props }: ContainerProps) {
       { children }
     </Container>
 
-    <Footer />
+    { !disableFooter && <Footer bodyProps={{ flexDirection: ["column", "row"], alignItems: ["left", "center"] }} /> }
   </>;
 }

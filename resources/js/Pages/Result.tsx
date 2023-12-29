@@ -1,4 +1,4 @@
-import { Alert, AlertIcon, Card, CardBody, Heading, Table, TableContainer, Tag, Tbody, Td, Text, Tfoot, Th, Thead, Tr, Wrap, WrapItem } from "@chakra-ui/react";
+import { Alert, AlertIcon, Button, Card, CardBody, HStack, Heading, Table, TableContainer, Tag, Tbody, Td, Text, Tfoot, Th, Thead, Tr, Wrap, WrapItem } from "@chakra-ui/react";
 import { usePage } from "@inertiajs/react";
 import { useMemo, type ReactNode } from "react";
 import HeaderPemilu from "~/Components/Header";
@@ -8,6 +8,7 @@ import { CalonData } from "./Home";
 import { Pie } from "react-chartjs-2";
 import { type ChartData } from "chart.js";
 import 'chart.js/auto';
+import { Download } from "lucide-react";
 
 type ResultData = {
   votes: {
@@ -90,8 +91,12 @@ export default function Result() {
 
     <Alert status='info' mb={4}>
       <AlertIcon />
-      Hasil rekapitulasi dapat dilihat dalam tabel di bawah ini hingga 31/12/2023.
+      Hasil Rekapitulasi Akhir akan diumumkan pada jam 21.00 tanggal 15 Januari 2024.
     </Alert>
+
+    <HStack mb={4} justifyContent="end">
+      <Button rightIcon={<Download />}>Unduh Rekapitulasi Sementara</Button>
+    </HStack>
 
     <Card mb={4}>
       <CardBody>
@@ -110,7 +115,7 @@ export default function Result() {
             </Tr>
           </Thead>
           <Tbody>
-            { votes.map((vote) => (
+            { false && votes.map((vote) => ( // disabled
               <Tr key={vote.token}>
                 <Td fontWeight="bold" textTransform="uppercase">{ vote.token }</Td>
                 <Td>{ vote.vote }</Td>
@@ -128,8 +133,8 @@ export default function Result() {
               </Tr>
             )) }
             <Tr>
-              <Td fontWeight="bold">Tidak Memilih</Td>
-              <Td>{ left } peserta</Td>
+              <Td fontWeight="bold">Belum Memilih</Td>
+              <Td>{ left } pemilih</Td>
             </Tr>
           </Tfoot>
         </Table>

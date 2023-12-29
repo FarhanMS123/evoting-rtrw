@@ -1,11 +1,12 @@
 import { EmailIcon } from "@chakra-ui/icons";
-import { Card, CardBody, CardProps, Icon, Link, Text } from "@chakra-ui/react";
+import { Card, CardBody, type CardBodyProps, type CardProps, Icon, Link, Text } from "@chakra-ui/react";
 import { usePage } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import Whatsapp from "~assets/whatsapp.svg?react";
 
-function Footer ({ isSticky, ...props }: {
+function Footer ({ isSticky, bodyProps, ...props }: {
   isSticky?: boolean;
+  bodyProps?: CardBodyProps;
 } & CardProps) {
   if (isSticky != false) isSticky = true;
 
@@ -30,7 +31,7 @@ function Footer ({ isSticky, ...props }: {
 
   return (
     <Card m="1rem" w="calc(100% - 2rem)" { ...(isSticky && isNotEnough ? stickyProps : {})} {...props}>
-      <CardBody display="flex" gap={8} justifyContent="center" alignItems="center">
+      <CardBody display="flex" gap={8} justifyContent="center" alignItems="center" {...bodyProps}>
         <Text w="fit-content">Bantuan: </Text>
         <Text w="fit-content">
           <Icon as={Whatsapp} fill="#25D366" w={6} h={6} alignSelf="center" mb={"-0.5rem"} />
