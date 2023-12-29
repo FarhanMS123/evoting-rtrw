@@ -146,6 +146,7 @@ function UserTable() {
                 <Th>J. Kelamin</Th>
                 <Th>Alamat</Th>
                 <Th>Pekerjaan</Th>
+                <Th>Email</Th>
                 <Th>Telepon</Th>
                 <Th>Status</Th>
                 <Th>Action</Th>
@@ -159,6 +160,7 @@ function UserTable() {
                   <Td>{ user.jenis_kelamin }</Td>
                   <Td>{ user.alamat }</Td>
                   <Td>{ user.pekerjaan }</Td>
+                  <Td>{ user.email }</Td>
                   <Td>{ user.telepon }</Td>
                   <Td>{ (() => {
                     let status = [];
