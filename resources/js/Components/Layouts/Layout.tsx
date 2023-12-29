@@ -72,6 +72,7 @@ export type UserData = {
   alamat: string;
   pekerjaan: string;
   jenis_kelamin: "laki-laki" | "perempuan";
+  email?: string;
   telepon?: string;
   password: string;
   is_admin?: boolean;
@@ -83,6 +84,7 @@ export type DefaultPageProps = {
   auth: {
     user: UserData | null;
   };
+  show_utils: boolean;
 };
 
 export default function Layout({ children, disableFooter, ...props }: {

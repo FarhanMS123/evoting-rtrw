@@ -21,7 +21,7 @@ UserManagement.layout = (page: ReactNode) => <DashboardLayout selectedMenu={Dash
 
 function UserForm () {
   const toast = useToast();
-  const { props: { users, warga } } = usePage<UsersPageProps>();
+  const { props: { users, warga, show_utils } } = usePage<UsersPageProps>();
 
   const { setData, post, patch, errors, recentlySuccessful, wasSuccessful, processing, ...props } = useForm<UserData & {_nik? : string}>();
   const [showPassword, { toggle }] = useBoolean();
@@ -86,6 +86,11 @@ function UserForm () {
               <Input variant="filled" name="pekerjaan" {...register("pekerjaan")} />
             </FormControl>
             <FormControl>
+              <FormLabel>Email</FormLabel>
+              <Input variant="filled" name="email" placeholder="email@example.com" type="email" {...register("email")} />
+              { errors.email && <FormHelperText>{errors.email}</FormHelperText> }
+            </FormControl>
+            <FormControl>
               <FormLabel>Telepon</FormLabel>
               <Input variant="filled" name="telepon" placeholder="+62XXXYYYYZZZZ" type="tel" {...register("telepon")} />
               { errors.telepon && <FormHelperText>{errors.telepon}</FormHelperText> }
@@ -101,13 +106,13 @@ function UserForm () {
               </InputGroup>
               <FormHelperText>Harap catat dan simpan password dengan aman. Informasi ini akan disimpan dalam bentuk terenkripsi dan tidak akan muncul lagi.</FormHelperText>
             </FormControl>
-            <FormControl mt={2}>
+            { show_utils && <FormControl mt={2}>
               <FormLabel>Lanjutan</FormLabel>
               <HStack gap={4}>
                 <Checkbox defaultChecked={warga?.is_admin} onChange={(e) => setData("is_admin", e.target.checked)}>Jadikan Admin</Checkbox>
                 <Checkbox defaultChecked={warga?.non_villager} onChange={(e) => setData("non_villager", e.target.checked)}>Bukan Warga</Checkbox>
               </HStack>
-            </FormControl>
+            </FormControl> }
         </CardBody>
         <CardFooter pt={0} display="flex" justifyContent="end">
           {!warga && <Button isLoading={processing} type="submit">Tambah</Button> }

@@ -12,7 +12,7 @@ export enum DashboardMenu {
 export default function DashboardLayout({ children, selectedMenu, ...props }: {
   selectedMenu: DashboardMenu;
 } & Parameters<typeof Layout>[0]) {
-  const { props: { auth, app_debug } } = usePage<DefaultPageProps>();
+  const { props: { auth, app_debug, show_utils } } = usePage<DefaultPageProps>();
 
   return (
     <Layout {...props}>
@@ -31,7 +31,7 @@ export default function DashboardLayout({ children, selectedMenu, ...props }: {
                   <Tab whiteSpace="nowrap">Kelola Calon</Tab>
                 </Link>
               </> }
-              { (auth.user?.is_admin || app_debug) &&
+              { (auth.user?.is_admin || app_debug) && show_utils &&
                 <Link href="/dashboard/debug">
                   <Tab whiteSpace="nowrap">Debug</Tab>
                 </Link>

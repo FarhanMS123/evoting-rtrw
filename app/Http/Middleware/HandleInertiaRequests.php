@@ -41,6 +41,7 @@ class HandleInertiaRequests extends Middleware
             'auth.user' => fn () => $request->user()
                 ? $request->user()
                 : null,
+            'show_utils' => session("show_utils", false),
         ]);
     }
 }
