@@ -47,8 +47,8 @@ export default function Login() {
             <Wrap mt={4} sx={{ "& > ul": { justifyContent: "space-between" } }}>
               <Button as={Link} href="/auth/forget-password" variant="link" mr={2}>Lupa password?</Button>
               <Wrap>
-                <Button variant="ghost" rightIcon={<QrCode />}>Scan QR</Button>
                 <Button type="submit">Login</Button>
+                <IconButton variant="ghost" icon={<QrCode />} aria-label="Scan QR Code" />
               </Wrap>
             </Wrap>
           </form>

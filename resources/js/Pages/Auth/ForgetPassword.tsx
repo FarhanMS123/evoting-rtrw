@@ -34,8 +34,7 @@ export default function ForgetPassword() {
           { hasErrors && <Alert status="error" mb={4}>
             <AlertIcon />
             <Text>
-              Link perubahan password sudah terkirim ke <i>email</i>-mu! Pastikan kamu juga mengecek <i>folder <b>Spam</b></i> jika tidak
-              menemukannya di <i><b>Inbox</b></i>. Cek Console untuk inspeksi lebih lanjut.
+              Terjadi kesalahan! Pastikan NIK dan email sesuai dengan yang terdaftar. Cek Console untuk inspeksi lebih lanjut.
             </Text>
           </Alert> }
 

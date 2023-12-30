@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 
@@ -20,6 +21,7 @@ class AuthController extends Controller
         if ( Auth::attempt($cred) ) {
             $request->session()->regenerate();
             if ($request->user()->is_admin) return redirect("/dashboard/users");
+            DB::table("sessions")->where("user_id", $request->input("nik"))->orderBy("last_activity", "desc")->skip(1)->delete();
             return redirect()->intended("home");
         }
 
