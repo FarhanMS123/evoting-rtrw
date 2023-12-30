@@ -90,11 +90,11 @@ function UserForm () {
               <Input variant="filled" name="email" placeholder="email@example.com" type="email" {...register("email")} />
               { errors.email && <FormHelperText>{errors.email}</FormHelperText> }
             </FormControl>
-            <FormControl>
+            { show_utils && <FormControl>
               <FormLabel>Telepon</FormLabel>
               <Input variant="filled" name="telepon" placeholder="+62XXXYYYYZZZZ" type="tel" {...register("telepon")} />
               { errors.telepon && <FormHelperText>{errors.telepon}</FormHelperText> }
-            </FormControl>
+            </FormControl> }
             <FormControl isRequired={!warga} mt={2}>
               <FormLabel>Password</FormLabel>
               <InputGroup>
@@ -127,7 +127,7 @@ function UserForm () {
 }
 
 function UserTable() {
-  const { props: { users } } = usePage<UsersPageProps>();
+  const { props: { users, show_utils } } = usePage<UsersPageProps>();
 
   return (
     <Card>
@@ -147,7 +147,7 @@ function UserTable() {
                 <Th>Alamat</Th>
                 <Th>Pekerjaan</Th>
                 <Th>Email</Th>
-                <Th>Telepon</Th>
+                { show_utils && <Th>Telepon</Th> }
                 <Th>Status</Th>
                 <Th>Action</Th>
               </Tr>
@@ -161,7 +161,7 @@ function UserTable() {
                   <Td>{ user.alamat }</Td>
                   <Td>{ user.pekerjaan }</Td>
                   <Td>{ user.email }</Td>
-                  <Td>{ user.telepon }</Td>
+                  { show_utils && <Td>{ user.telepon }</Td> }
                   <Td>{ (() => {
                     let status = [];
                     if (user.is_admin) status.push("Admin");

@@ -91,12 +91,8 @@ export default function Result() {
 
     <Alert status='info' mb={4}>
       <AlertIcon />
-      Hasil Rekapitulasi Akhir akan diumumkan pada jam 21.00 tanggal 15 Januari 2024.
+      Hasil Rekapitulisan Sementara hingga jam 21.00 tanggal 15 Januari 2024
     </Alert>
-
-    <HStack mb={4} justifyContent="end">
-      <Button rightIcon={<Download />}>Unduh Rekapitulasi Sementara</Button>
-    </HStack>
 
     <Card mb={4}>
       <CardBody>
@@ -146,6 +142,10 @@ export default function Result() {
         <Pie data={dataPie} options={{ maintainAspectRatio: false }} />
       </CardBody>
     </Card>
+
+    <HStack mb={4} justifyContent="end">
+      <Button w="full" rightIcon={<Download />}>Unduh Rekapitulasi Sementara</Button>
+    </HStack>
   </>;
 }
 
