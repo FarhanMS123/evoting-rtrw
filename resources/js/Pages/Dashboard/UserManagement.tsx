@@ -54,8 +54,8 @@ function UserForm () {
 
   return (
     <Card>
-      <CardHeader bgColor="teal.400">
-        <Text fontSize="3xl" color="white">Kelola Data Warga</Text>
+      <CardHeader>
+        <Heading size="md">Kelola Data Warga</Heading>
       </CardHeader>
       <form ref={refForm} onSubmit={(e) => {e.preventDefault(); (warga ? patch : post)("");}}>
         <CardBody>
