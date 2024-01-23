@@ -90,7 +90,7 @@ export type DefaultPageProps = {
 export default function Layout({ children, disableFooter, ...props }: {
   disableFooter?: boolean;
 } & ContainerProps) {
-  const { props: { auth } } = usePage<DefaultPageProps>();
+  const { props: { auth, show_utils } } = usePage<DefaultPageProps>();
   const toast = useToast({
     status: "error",
   });
@@ -108,8 +108,10 @@ export default function Layout({ children, disableFooter, ...props }: {
             <StyledButton href="/dashboard/users">Kelola Warga</StyledButton>
             <StyledButton href="/dashboard/calons">Kelola Calon</StyledButton>
           </> }
-          <StyledButton href="/pemilihan">Mulai Pemilihan</StyledButton>
-          <StyledButton href="/hasil-pemilihan">Hasil Pemilihan</StyledButton>
+          { (!isAdmin || show_utils) && <>
+            <StyledButton href="/pemilihan">Mulai Pemilihan</StyledButton>
+            <StyledButton href="/hasil-pemilihan">Hasil Pemilihan</StyledButton>
+          </> }
         </HStack>
         <HStack gap={0} ml="auto">
           {/* <StyledButton href="/dashboard" linkMatch={/^\/dashboard\/.*$/}>Dashboard</StyledButton> */}
@@ -135,8 +137,10 @@ export default function Layout({ children, disableFooter, ...props }: {
     <Container maxW="container.xl" py={6} {...props}>
       <Wrap mb={2} display={{ lg: "none" }} sx={{ ".chakra-wrap__list": { gap: 0, } }}>
         <WrapButton href="/">Beranda</WrapButton>
-        <WrapButton href="/pemilihan">Mulai Pemilihan</WrapButton>
-        <WrapButton href="/hasil-pemilihan">Hasil Pemilihan</WrapButton>
+        { (!isAdmin || show_utils) && <>
+          <WrapButton href="/pemilihan">Mulai Pemilihan</WrapButton>
+          <WrapButton href="/hasil-pemilihan">Hasil Pemilihan</WrapButton>
+        </> }
         <WrapButton href="#1" onClick={(e) => {e.preventDefault(); router.post("/auth/logout");}}>Keluar</WrapButton>
       </Wrap>
       { isAdmin && <Wrap mb={6} display={{ lg: "none" }} sx={{ ".chakra-wrap__list": { gap: 0, } }}>

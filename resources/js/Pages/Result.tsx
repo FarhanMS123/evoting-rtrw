@@ -1,8 +1,8 @@
 import { Alert, AlertIcon, Button, Card, CardBody, HStack, Heading, Table, TableContainer, Tag, Tbody, Td, Text, Tfoot, Th, Thead, Tr, Wrap, WrapItem } from "@chakra-ui/react";
-import { usePage } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import { useMemo, type ReactNode } from "react";
 import HeaderPemilu from "~/Components/Header";
-import Layout, { type DefaultPageProps } from "~/Components/Layouts/Layout";
+import Layout, { UserData, type DefaultPageProps } from "~/Components/Layouts/Layout";
 import Calon from "~/Components/pages/Home/Calon";
 import { CalonData } from "./Home";
 import { Pie } from "react-chartjs-2";
@@ -10,16 +10,17 @@ import { type ChartData } from "chart.js";
 import 'chart.js/auto';
 import { Download } from "lucide-react";
 
-type ResultData = {
+export type ResultData = {
+  calons?: CalonData[];
   votes: {
     token: string;
     vote: number;
   }[];
   left: number;
-  group: (CalonData & { suara: number; vote: number; })[]
+  group: (CalonData & { suara: number; vote: number; })[];
 };
 
-type ResultPageProps = ResultData & DefaultPageProps;
+export type ResultPageProps = ResultData & DefaultPageProps;
 
 const rand256 = () => Math.floor(Math.random() * 256);
 const rand = (min: number, max: number) => Math.floor(min + (Math.random() * (max - min)));
@@ -27,7 +28,7 @@ export default function Result() {
   const { props: { votes, left, group } } = usePage<ResultPageProps>();
   const dataPie = useMemo(() => {
     const ret = {
-      labels: ["Tidak Memilih"],
+      labels: ["Belum Memilih"],
       datasets: [{
         data: [left],
         backgroundColor: ["#34495e"],
@@ -39,9 +40,6 @@ export default function Result() {
       ret.datasets[0].data.push(suara.suara ?? 0);
       (ret.datasets[0].backgroundColor as string[]).push(`hsl(${ rand(0, 360) }, ${ rand(16, 100) }%, ${ rand(16, 100) }%)`)
     });
-
-
-    console.log(ret);
 
     return ret;
   }, [votes, left, group]);
@@ -130,7 +128,7 @@ export default function Result() {
             )) }
             <Tr>
               <Td fontWeight="bold">Belum Memilih</Td>
-              <Td>{ left } pemilih</Td>
+              <Td>{ left } warga</Td>
             </Tr>
           </Tfoot>
         </Table>
@@ -144,7 +142,7 @@ export default function Result() {
     </Card>
 
     <HStack mb={4} justifyContent="end">
-      <Button w="full" rightIcon={<Download />}>Unduh Rekapitulasi Sementara</Button>
+      <Button w="full" rightIcon={<Download />} as={Link} href="/hasil-pemilihan/print-1">Unduh Rekapitulasi Sementara</Button>
     </HStack>
   </>;
 }

@@ -1,4 +1,4 @@
-import { Alert, AlertDialog, AlertDialogBody, AlertDialogContent, AlertDialogHeader, AlertDialogOverlay, AlertIcon, Button, Card, CardBody, Heading, Text, Wrap, WrapItem, useBoolean, useTheme, useToast } from "@chakra-ui/react";
+import { Alert, AlertIcon, Button, Card, CardBody, Heading, Text, Wrap, WrapItem, useBoolean, useTheme, useToast } from "@chakra-ui/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { type ReactNode, useState, useMemo, useEffect } from "react";
 import HeaderPemilu from "~/Components/Header";
@@ -121,7 +121,7 @@ function VotingSession() {
       leastDestructiveRef={cancelRef}
       header={`Anda memilih calon #${ (vote as CalonData | null)?.nomor }?`}
       footer={<>
-        <Button ref={cancelRef} variant="ghost" onClick={onClose}>Batalkan</Button>
+        <Button ref={cancelRef} variant="ghost" onClick={() => onClose()}>Batalkan</Button>
         <Button onClick={() => post("/pemilihan")}>Pilih</Button>
       </>}
     >

@@ -2,6 +2,7 @@ import { ViewIcon, ViewOffIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
 import { type InputProps, Card, CardBody, FormControl, FormLabel, Input, RadioGroup, Radio, HStack, InputGroup, InputRightAddon, IconButton, CardFooter, Button, FormHelperText, Checkbox, useToast, TableContainer, Table, Tr, Th, Thead, Tbody, Td, TableCaption, useBoolean, CardHeader, Heading, Text } from "@chakra-ui/react";
 import { Link, router, useForm, usePage } from "@inertiajs/react";
 import { useState, type ReactNode, useEffect, useRef } from "react";
+import { DialogSkeleton, useDialog } from "~/Components/Dialog";
 import DashboardLayout, { DashboardMenu } from "~/Components/Layouts/DashboardLayout";
 import { DefaultPageProps, UserData } from "~/Components/Layouts/Layout";
 
@@ -128,8 +129,9 @@ function UserForm () {
 
 function UserTable() {
   const { props: { users, show_utils } } = usePage<UsersPageProps>();
+  const { isOpen, onClose, data, setData, cancelRef } = useDialog<UserData>();
 
-  return (
+  return (<>
     <Card>
       <CardBody>
         <HStack w="full">
@@ -173,9 +175,10 @@ function UserTable() {
                     <Link href={`/dashboard/users/${user.nik}`}>
                       <IconButton aria-label="Edit" icon={<EditIcon />} colorScheme="gray" />
                     </Link>
-                    <Link href={`/dashboard/users/${user.nik}`} method="delete">
+                      <IconButton aria-label="Delete" icon={<DeleteIcon />} colorScheme="gray" ml={1} onClick={() => setData(user, true)} />
+                    {/* <Link href={`/dashboard/users/${user.nik}`} method="delete">
                       <IconButton aria-label="Delete" icon={<DeleteIcon />} colorScheme="gray" ml={1} />
-                    </Link>
+                    </Link> */}
                   </Td>
                 </Tr>
               )) }
@@ -184,5 +187,17 @@ function UserTable() {
         </TableContainer>
       </CardBody>
     </Card>
-  );
+    <DialogSkeleton isOpen={isOpen} onClose={onClose}
+      leastDestructiveRef={cancelRef}
+      header={`Hapus "${ data?.nama }" dari Warga?`}
+      footer={<>
+        <Button ref={cancelRef} variant="ghost" onClick={() => onClose()}>Batalkan</Button>
+        <Link href={`/dashboard/users/${data?.nik}`} method="delete">
+          <Button>Hapus</Button>
+        </Link>
+      </>}
+    >
+      <Text>Warga dengan nama <b>{ data?.nama }</b> dan NIK <b>{ data?.nik }</b> akan dihapus dari daftar dan kehilangan hak pilihnya melalui aplikasi ini.</Text>
+    </DialogSkeleton>
+  </>);
 }

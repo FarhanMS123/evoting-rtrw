@@ -3,7 +3,7 @@ import { AlertDialog, AlertDialogBody, AlertDialogCloseButton, AlertDialogConten
   type AlertDialogProps,
   useDisclosure,
   ButtonProps} from "@chakra-ui/react";
-import { type ForwardedRef, ReactNode, useRef } from "react";
+import { type ForwardedRef, ReactNode, useRef, useState } from "react";
 
 export function DialogFooter({cancelText, okText, linkText, linkHref, props, cancelRef, ...rootProps}: {
   cancelText?: ReactNode | false;
@@ -28,11 +28,22 @@ export function DialogFooter({cancelText, okText, linkText, linkHref, props, can
   );
 }
 
-export function useDialog() {
-  const { isOpen, onOpen, onClose, ...use_disclosure } = useDisclosure();
+export function useDialog<T,>() {
+  const { isOpen, onOpen, onClose: _onClose, ...use_disclosure } = useDisclosure();
   const cancelRef = useRef<HTMLButtonElement>(null);
+  const [data, _setData] = useState<T | null>(null);
 
-  return { isOpen, onOpen, onClose, cancelRef, ...use_disclosure };
+  const setData = (data: T, shouldOpen?: boolean) => {
+    _setData(data);
+    if (shouldOpen) onOpen();
+  };
+
+  const onClose = (clearData?: boolean) => {
+    if (clearData) _setData(null);
+    _onClose();
+  }
+
+  return { isOpen, onOpen, onClose, _onClose, cancelRef, data, setData, _setData, ...use_disclosure };
 }
 
 export function DialogSkeleton({header, children, footer, props, ...rootProps}: {

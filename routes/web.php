@@ -25,6 +25,7 @@ Route::get('/', [UniversalController::class, "showHome"])->middleware("auth")->n
 Route::get('/pemilihan', [VotingController::class, "create"])->middleware("auth")->name("voting");
 Route::post('/pemilihan', [VotingController::class, "store"])->middleware("auth");
 Route::get("/hasil-pemilihan", [VotingController::class, "index"]);
+Route::get("/hasil-pemilihan/print-1", [VotingController::class, "printView"]);
 
 Route::redirect("/dashboard", "/dashboard/profile")->middleware(["auth"]);
 Route::inertia("/dashboard/profile", "Dashboard/Profile")->middleware(["auth"]);

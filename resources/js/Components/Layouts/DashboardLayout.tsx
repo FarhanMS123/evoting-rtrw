@@ -20,9 +20,9 @@ export default function DashboardLayout({ children, selectedMenu, ...props }: {
         <Card p={2} overflow="auto">
           <Tabs variant="soft-rounded" index={selectedMenu}>
             <TabList>
-              <Link href="/dashboard/profile">
+              { (!auth.user?.is_admin || show_utils) && <Link href="/dashboard/profile">
                 <Tab whiteSpace="nowrap">Profile</Tab>
-              </Link>
+              </Link> }
               { Boolean(auth.user?.is_admin) && <>
                 <Link href="/dashboard/users">
                   <Tab whiteSpace="nowrap">Kelola Warga</Tab>
