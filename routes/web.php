@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CalonController;
 use App\Http\Controllers\UniversalController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VotingController;
@@ -31,6 +32,7 @@ Route::redirect("/dashboard", "/dashboard/profile")->middleware(["auth"]);
 Route::inertia("/dashboard/profile", "Dashboard/Profile")->middleware(["auth"]);
 
 Route::resource('dashboard/users', UserController::class)->middleware(["auth", "rolem:is_admin"]);
+Route::resource('dashboard/calons', CalonController::class)->middleware(["auth", "rolem:is_admin"]);
 
 Route::inertia("/dashboard/debug", "Dashboard/Debug")->middleware(["auth", "rolem:is_admin"]);
 Route::get("/dashboard/debug/show_utils", function() {

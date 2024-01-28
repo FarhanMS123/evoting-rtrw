@@ -43,6 +43,7 @@ export default function Result() {
 
     return ret;
   }, [votes, left, group]);
+  const sortCalon = useMemo(() => group.sort((a, b) => (b.suara - a.suara)), [group]);
 
   return <>
     {/* <Card mb={4}>
@@ -89,7 +90,8 @@ export default function Result() {
 
     <Alert status='info' mb={4}>
       <AlertIcon />
-      Hasil Rekapitulisan Sementara hingga jam 21.00 tanggal 15 Januari 2024
+      {/* Hasil Rekapitulisan Sementara hingga jam 21.00 tanggal 15 Januari 2024 */}
+      Hasil Rekapitulisasi.
     </Alert>
 
     <Card mb={4}>
@@ -127,8 +129,15 @@ export default function Result() {
               </Tr>
             )) }
             <Tr>
-              <Td fontWeight="bold">Belum Memilih</Td>
+              <Td fontWeight="bold">Tidak Memilih</Td>
               <Td>{ left } warga</Td>
+            </Tr>
+            <Tr>
+              <Td fontWeight="bold">Pemenang</Td>
+              <Td>
+                <Tag mr="2">{ sortCalon[0].nomor }</Tag>
+                <Text display="inline-block">{ sortCalon[0].user.nama }</Text>
+              </Td>
             </Tr>
           </Tfoot>
         </Table>

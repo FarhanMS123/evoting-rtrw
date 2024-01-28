@@ -105,8 +105,8 @@ export default function Layout({ children, disableFooter, ...props }: {
         <HStack gap={0} ml={2}>
           { !isAdmin && <StyledButton href="/">Beranda</StyledButton> }
           { isAdmin && <>
-            <StyledButton href="/dashboard/users">Kelola Warga</StyledButton>
-            <StyledButton href="/dashboard/calons">Kelola Calon</StyledButton>
+            <StyledButton href="/dashboard/users" linkMatch={/^\/dashboard\/users(\/.*)?/}>Kelola Warga</StyledButton>
+            <StyledButton href="/dashboard/calons" linkMatch={/^\/dashboard\/calons(\/.*)?/}>Kelola Calon</StyledButton>
           </> }
           { (!isAdmin || show_utils) && <>
             <StyledButton href="/pemilihan">Mulai Pemilihan</StyledButton>
@@ -144,8 +144,8 @@ export default function Layout({ children, disableFooter, ...props }: {
         <WrapButton href="#1" onClick={(e) => {e.preventDefault(); router.post("/auth/logout");}}>Keluar</WrapButton>
       </Wrap>
       { isAdmin && <Wrap mb={6} display={{ lg: "none" }} sx={{ ".chakra-wrap__list": { gap: 0, } }}>
-        <WrapButton href="/dashboard/users" colorScheme="pink">Kelola Warga</WrapButton>
-        <WrapButton href="/dashboard/calons" colorScheme="pink">Kelola Calon</WrapButton>
+        <WrapButton href="/dashboard/users" colorScheme="pink" linkMatch={/^\/dashboard\/users(\/.*)?/}>Kelola Warga</WrapButton>
+        <WrapButton href="/dashboard/calons" colorScheme="pink" linkMatch={/^\/dashboard\/calons(\/.*)?/}>Kelola Calon</WrapButton>
       </Wrap> }
 
       { children }

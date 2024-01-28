@@ -1,10 +1,12 @@
 import { ViewIcon, ViewOffIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
-import { type InputProps, Card, CardBody, FormControl, FormLabel, Input, RadioGroup, Radio, HStack, InputGroup, InputRightAddon, IconButton, CardFooter, Button, FormHelperText, Checkbox, useToast, TableContainer, Table, Tr, Th, Thead, Tbody, Td, TableCaption, useBoolean, CardHeader, Heading, Text } from "@chakra-ui/react";
+import { type InputProps, Card, CardBody, FormControl, FormLabel, Input, RadioGroup, Radio, HStack, InputGroup, InputRightAddon,
+        IconButton, CardFooter, Button, FormHelperText, Checkbox, useToast, TableContainer, Table, Tr, Th, Thead, Tbody, Td,
+        TableCaption, useBoolean, CardHeader, Heading, Text } from "@chakra-ui/react";
 import { Link, router, useForm, usePage } from "@inertiajs/react";
 import { useState, type ReactNode, useEffect, useRef } from "react";
 import { DialogSkeleton, useDialog } from "~/Components/Dialog";
 import DashboardLayout, { DashboardMenu } from "~/Components/Layouts/DashboardLayout";
-import { DefaultPageProps, UserData } from "~/Components/Layouts/Layout";
+import { type DefaultPageProps, type UserData } from "~/Components/Layouts/Layout";
 
 export type UsersPageProps = {
   warga?: UserData;
@@ -99,7 +101,7 @@ function UserForm () {
             <FormControl isRequired={!warga} mt={2}>
               <FormLabel>Password</FormLabel>
               <InputGroup>
-                <Input variant="filled" name="password" placeholder="************" type={showPassword ? "text" : "password"} {...register()} />
+                <Input variant="filled" name="password" placeholder={showPassword ? "password" : "************"} type={showPassword ? "text" : "password"} {...register()} />
                 <InputRightAddon p={0}>
                   {showPassword ? <IconButton aria-label="password showed" icon={<ViewIcon />} onClick={() => toggle()} /> :
                   <IconButton color="BlackAlpha.900" colorScheme="" aria-label="password hid" icon={<ViewOffIcon />} onClick={() => toggle()} />}
@@ -175,10 +177,7 @@ function UserTable() {
                     <Link href={`/dashboard/users/${user.nik}`}>
                       <IconButton aria-label="Edit" icon={<EditIcon />} colorScheme="gray" />
                     </Link>
-                      <IconButton aria-label="Delete" icon={<DeleteIcon />} colorScheme="gray" ml={1} onClick={() => setData(user, true)} />
-                    {/* <Link href={`/dashboard/users/${user.nik}`} method="delete">
-                      <IconButton aria-label="Delete" icon={<DeleteIcon />} colorScheme="gray" ml={1} />
-                    </Link> */}
+                    <IconButton aria-label="Delete" icon={<DeleteIcon />} colorScheme="gray" ml={1} onClick={() => setData(user, true)} />
                   </Td>
                 </Tr>
               )) }

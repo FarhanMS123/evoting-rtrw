@@ -20,9 +20,7 @@ class Calon extends Model
         'misi',
     ];
 
-    protected $casts = [
-        'misi' => 'array',
-    ];
+    protected $casts = [];
 
     public function user(): BelongsTo {
         return $this->belongsTo(User::class, "nik", "nik");

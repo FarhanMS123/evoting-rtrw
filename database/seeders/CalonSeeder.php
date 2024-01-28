@@ -34,13 +34,11 @@ class CalonSeeder extends Seeder
             "nik" => "8899003112230901",
             'photo' => "/storage/paslon-1.jpg",
             'visi' => "Menciptakan RT/RW yang makmur dan sejahtera dengan merberdayakan tikus dan hewan-hewan kecil lainnya dalam kegiatan yang prduktif dan menghasilkan. Serta menciptakan ketentraman antar-kucing dan hewan-hewan lainnya dalam kesepakatan yang menguntungkan di kedua belah pihak.",
-            'misi' => [
-                "lorem ipsum dolor sit amet",
-                "lorem ipsum dolor sit amet",
-                "lorem ipsum dolor sit amet",
-                "lorem ipsum dolor sit amet",
-                "lorem ipsum dolor sit amet",
-            ],
+            'misi' => "1. lorem ipsum dolor sit amet\n" .
+                    "2. lorem ipsum dolor sit amet\n" .
+                    "3. lorem ipsum dolor sit amet\n" .
+                    "4. lorem ipsum dolor sit amet\n" .
+                    "5. lorem ipsum dolor sit amet",
         ]);
 
         \App\Models\User::create([
@@ -61,13 +59,11 @@ class CalonSeeder extends Seeder
             "nik" => "8899003112230902",
             'photo' => "/storage/paslon-2.jpg",
             'visi' => "Menciptakan RT/RW yang manis dan tentram melalui program-program yang memadukan setiap makhluk dalam keuntungan setimpal.",
-            'misi' => [
-                "lorem ipsum dolor sit amet",
-                "lorem ipsum dolor sit amet",
-                "lorem ipsum dolor sit amet",
-                "lorem ipsum dolor sit amet",
-                "lorem ipsum dolor sit amet",
-            ],
+            'misi' => "1. lorem ipsum dolor sit amet\n" .
+                    "2. lorem ipsum dolor sit amet\n" .
+                    "3. lorem ipsum dolor sit amet\n" .
+                    "4. lorem ipsum dolor sit amet\n" .
+                    "5. lorem ipsum dolor sit amet",
         ]);
     }
 }

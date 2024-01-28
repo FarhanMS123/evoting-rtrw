@@ -11,7 +11,7 @@ export type CalonData = {
   nik: string;
   photo: string;
   visi: string;
-  misi: string[];
+  misi: string;
   user: UserData;
 };
 

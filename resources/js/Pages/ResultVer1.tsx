@@ -1,6 +1,6 @@
 import { Button, Card, CardBody, CardProps, FormControl, FormHelperText, FormLabel, Heading, Input, NumberDecrementStepper, NumberIncrementStepper, NumberInput, NumberInputField, NumberInputStepper, Table, Tag, Tbody, Td, Text, Tfoot, Th, Thead, Tr } from "@chakra-ui/react";
 import { usePage } from "@inertiajs/react";
-import { useState, type ReactNode } from "react";
+import { useState, type ReactNode, useMemo } from "react";
 import HeaderPemilu from "~/Components/Header";
 import Layout from "~/Components/Layouts/Layout";
 import { type ResultPageProps } from "./Result";
@@ -15,7 +15,7 @@ export default function ResultVer1() {
   const [currPage, setCurrPage] = useState(1);
   const [pageSize, setPageSize] = useState(100);
 
-  console.log({ calons })
+  const sortCalon = useMemo(() => group.sort((a, b) => (b.suara - a.suara)), [group]);
 
   return (<>
     <Card {...sizeCard} sx={{
@@ -123,8 +123,15 @@ export default function ResultVer1() {
               </Tr>
             )) }
             <Tr>
-              <Td fontWeight="bold">Belum Memilih</Td>
+              <Td fontWeight="bold">Tidak Memilih</Td>
               <Td>{ left } warga</Td>
+            </Tr>
+            <Tr>
+              <Td fontWeight="bold">Nama Pemenang</Td>
+              <Td>
+                <Tag mr="2">{ sortCalon[0].nomor }</Tag>
+                <Text display="inline-block">{ sortCalon[0].user.nama }</Text>
+              </Td>
             </Tr>
           </Tfoot>
         </Table>

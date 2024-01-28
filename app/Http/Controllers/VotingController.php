@@ -37,10 +37,6 @@ class VotingController extends Controller
     public function printView() {
         $votes = Voting::all();
         $calons = Calon::with(["user"])->get();
-        // $group = Voting::groupBy("vote")->selectRaw("vote, count(vote) as suara")->get();
-        // $group = Calon::with(["user"])->leftJoin("votings", "calons.nomor", "=", "votings.vote")->get();
-        // $group = Calon::with(["user"])->leftJoin("votings", function (JoinClause $join) {
-        //     $join->on("calons.nomor", "=", "votings.vote")->groupBy("vote")->selectRaw("count(vote) as suara");
         $group = Calon::with(["user"])->leftJoinSub(
             Voting::groupBy("vote")->selectRaw("vote, count(vote) as suara"),
             "votings",
