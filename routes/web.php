@@ -40,6 +40,12 @@ Route::get("/dashboard/debug/show_utils", function() {
     return redirect("/");
 })->middleware(["auth", "rolem:is_admin"]);
 Route::get("/dashboard/debug/clean_votings", [UniversalController::class, "cleanVoting"])->middleware(["auth", "rolem:is_admin"]);
+Route::get("/dashboard/debug/envs", function() {
+    dd([
+        "APP_DEBUG" => env("APP_DEBUG"),
+        "DEPLOYPATH" => env("DEPLOYPATH"),
+    ]);
+})->middleware(["auth", "rolem:is_admin"]);
 Route::post("/dashboard/debug", function (Request $request) {
     $exitCode = Artisan::call($request->input("cmd"));
     return response()->json([ $exitCode ]);

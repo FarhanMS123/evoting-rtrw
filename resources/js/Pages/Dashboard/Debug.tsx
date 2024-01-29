@@ -44,6 +44,7 @@ export default function Debug() {
         <HStack gap={4}>
           <Button variant='outline' as={Link} href="/dashboard/debug/show_utils">show_utils</Button>
           <Button variant='outline' as={Link} href="/dashboard/debug/clean_votings">clean_votings</Button>
+          <Button variant='outline' as={Link} href="/dashboard/debug/envs">envs</Button>
         </HStack>
 
       </CardBody>
