@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Calon;
 use App\Models\User;
+use App\Models\Voting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class CalonController extends Controller
 {
@@ -40,7 +42,18 @@ class CalonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            "nomor" => ["nullable", "numberic"],
+            "nik" => ["digits:16", "unique:calons,nik"],
+            // "photo" => ["image"],
+            "visi" => ["string"],
+            "misi" => ["string"],
+        ]);
+        $data["photo"] = "";
+
+        Calon::create($data);
+
+        return back();
     }
 
     /**
@@ -66,9 +79,9 @@ class CalonController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
-        //
+        return $this->show($request, $id);
     }
 
     /**
@@ -76,7 +89,17 @@ class CalonController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $request->validate([
+            "nomor" => ["nullable", "numberic"],
+            "nik" => ["nullable", "digits:16", "unique:calons,nik"],
+            "photo" => ["nullable", "image"],
+            "visi" => ["nullable", "string"],
+            "misi" => ["nullable", "string"],
+        ]);
+        $calon = Calon::where("nomor", $id)->firstOrFail();
+        $calon->update($data);
+        if ($request->has("nomor")) return redirect("/dashboard/calons/" . $request->input("nomor"));
+        return back();
     }
 
     /**
@@ -84,6 +107,17 @@ class CalonController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $calon = Calon::where("nomor", $id)->firstOrFail();
+
+        User::join("votings", "users.nonce_voting", "LIKE", "votings.token")
+            ->whereNot("users.nik", $calon->nik)
+            ->where("votings.vote", $calon->nomor)
+            ->update([
+                "nonce_voting" => null,
+            ]);
+        Voting::where("vote", $calon->nomor)->delete();
+
+        $calon->delete();
+        return redirect("/dashboard/calons");
     }
 }

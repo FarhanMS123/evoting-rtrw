@@ -26,7 +26,7 @@ class VotingController extends Controller
             "votings",
             "calons.nomor", "=", "votings.vote"
         )->get();
-        $left = User::count() - Voting::count();
+        $left = User::where("non_villager", "!=", true)->count() - Voting::count();
         return inertia("Result", [
             "votes" => $votes,
             "group" => $group,
@@ -42,7 +42,7 @@ class VotingController extends Controller
             "votings",
             "calons.nomor", "=", "votings.vote"
         )->get();
-        $left = User::count() - Voting::count();
+        $left = User::where("non_villager", "!=", true)->count() - Voting::count();
         return inertia("ResultVer1", [
             "calons" => $calons,
             "votes" => $votes,

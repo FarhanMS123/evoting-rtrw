@@ -133,6 +133,13 @@ function UserTable() {
   const { props: { users, show_utils } } = usePage<UsersPageProps>();
   const { isOpen, onClose, data, setData, cancelRef } = useDialog<UserData>();
 
+  useEffect(() => {
+    const ev = router.on("success", (ev) => {
+      onClose(true);
+    });
+    return ev;
+  }, []);
+
   return (<>
     <Card>
       <CardBody>
@@ -145,6 +152,7 @@ function UserTable() {
           <Table variant='simple' colorScheme="gray">
             <Thead>
               <Tr>
+                <Th>No.</Th>
                 <Th>NIK</Th>
                 <Th>Nama</Th>
                 <Th>J. Kelamin</Th>
@@ -157,8 +165,9 @@ function UserTable() {
               </Tr>
             </Thead>
             <Tbody>
-              { users.map(user => (
+              { users.map((user, index) => (
                 <Tr>
+                  <Td>{ index + 1 }</Td>
                   <Td>{ user.nik }</Td>
                   <Td>{ user.nama }</Td>
                   <Td>{ user.jenis_kelamin }</Td>

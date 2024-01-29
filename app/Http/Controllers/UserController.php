@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Calon;
 use App\Models\User;
+use App\Models\Voting;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -100,7 +102,22 @@ class UserController extends Controller
     public function destroy(string $id)
     {
         $warga = User::where("nik", $id)->firstOrFail();
+
+        $calon = Calon::where("nik", $warga->nik)->first();
+        if ($calon) {
+            User::join("votings", "users.nonce_voting", "LIKE", "votings.token")
+                ->whereNot("users.nik", $calon->nik)
+                ->where("votings.vote", $calon->nomor)
+                ->update([
+                    "nonce_voting" => null,
+                ]);
+            Voting::where("vote", $calon->nomor)->delete();
+            $calon->delete();
+        }
+
         $warga->delete();
+        Voting::where("token", "=", $warga->nonce_voting)->delete();
+
         return redirect("/dashboard/users");
     }
 }

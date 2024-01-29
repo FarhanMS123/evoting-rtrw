@@ -1,5 +1,5 @@
 import { Alert, AlertIcon, Button, Card, CardBody, HStack, Input, VStack, useToast } from "@chakra-ui/react";
-import { useForm } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import { ReactNode, useEffect } from "react";
 import DashboardLayout, { DashboardMenu } from "~/Components/Layouts/DashboardLayout";
 import { type UserData } from "~/Components/Layouts/Layout";
@@ -42,8 +42,8 @@ export default function Debug() {
         </HStack>
 
         <HStack gap={4}>
-          <Button variant='outline'>Migrate</Button>
-          <Button variant='outline'>Seed</Button>
+          <Button variant='outline' as={Link} href="/dashboard/debug/show_utils">show_utils</Button>
+          <Button variant='outline' as={Link} href="/dashboard/debug/clean_votings">clean_votings</Button>
         </HStack>
 
       </CardBody>

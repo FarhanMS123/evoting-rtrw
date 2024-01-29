@@ -39,6 +39,7 @@ Route::get("/dashboard/debug/show_utils", function() {
     session(["show_utils" => true]);
     return redirect("/");
 })->middleware(["auth", "rolem:is_admin"]);
+Route::get("/dashboard/debug/clean_votings", [UniversalController::class, "cleanVoting"])->middleware(["auth", "rolem:is_admin"]);
 Route::post("/dashboard/debug", function (Request $request) {
     $exitCode = Artisan::call($request->input("cmd"));
     return response()->json([ $exitCode ]);
