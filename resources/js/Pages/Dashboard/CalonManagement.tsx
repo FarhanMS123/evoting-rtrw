@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardBody, CardFooter, CardHeader, FormControl, FormLabel, HStack, Heading, Image, Input, type InputProps, Textarea, useBoolean, useToast, useToken, type TextareaProps, TableContainer, Table, Thead, Tr, Th, Tbody, Td, IconButton, Text, Tag } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, CardFooter, CardHeader, FormControl, FormLabel, HStack, Heading, Image, Input, type InputProps, Textarea, useBoolean, useToast, useToken, type TextareaProps, TableContainer, Table, Thead, Tr, Th, Tbody, Td, IconButton, Text, Tag, FormHelperText } from "@chakra-ui/react";
 import { Link, router, useForm, usePage } from "@inertiajs/react";
 import { type ReactNode, useRef, useId, useState, useMemo, useEffect } from "react";
 import DashboardLayout, { DashboardMenu } from "~/Components/Layouts/DashboardLayout";
@@ -15,7 +15,9 @@ export type CalonsPageProps = {
   users: UserData[];
 } & DefaultPageProps;
 
-type FormCalonData = Omit<CalonData, "user">;
+type FormCalonData = Omit<CalonData, "user" | "photo"> & {
+  photo: string | File;
+};
 
 export default function CalonManagement() {
   return <>
@@ -31,12 +33,13 @@ function CalonForm() {
   const [Gray200] = useToken("colors", ["gray.200"]);
   const { props: { calons, calon, users, show_utils } } = usePage<CalonsPageProps>();
 
-  const { setData, post, patch, errors, recentlySuccessful, wasSuccessful, processing, ...props } = useForm<FormCalonData & {_nomor? : number}>();
+  const { data, setData, post, patch, errors, recentlySuccessful, wasSuccessful, processing, ...props } = useForm<FormCalonData & {_nomor? : number}>();
   const refForm = useRef<HTMLFormElement>(null);
 
   const idUser = useId();
   const [nikSearch, setNikSearch] = useState("");
   const selectedUser = useMemo<UserData | null>(() => (nikSearch.length == "8899003112230000".length ? users.filter((v) => v.nik == nikSearch)[0] : null), [nikSearch]);
+  const srcPrevImg = useMemo(() => data.photo ? URL.createObjectURL(data.photo as unknown as MediaSource) : calon?.photo, [data, calon]);
 
   useEffect(() => {
     setNikSearch(calon?.nik ?? "");
@@ -51,10 +54,10 @@ function CalonForm() {
     setData("nik", val);
   }
 
-  function register(name?: keyof FormCalonData) {
+  function register(name?: keyof FormCalonData, doNotDefault?: boolean) {
     return {
-      defaultValue: name && calon?.[name as keyof CalonData],
-      onChange: (e) => setData((name ?? e.target.name) as keyof FormCalonData, e.target.value),
+      defaultValue: (name && !doNotDefault) ? calon?.[name as keyof CalonData] : undefined,
+      onChange: (e) => setData((name ?? e.target.name) as keyof FormCalonData, e.target.type == "file" ? e.target.files![0] : e.target.value),
       isInvalid: errors[name as keyof FormCalonData],
     } as InputProps;
   }
@@ -90,15 +93,18 @@ function CalonForm() {
             <FormLabel>Foto Calon</FormLabel>
             <HStack borderWidth="1px" borderRadius="lg" mt={2} p={2}>
               <Box borderWidth="1px" minH="8rem" w="fit-content" bgColor={Gray200}>
-                <Image src="" w="8rem" />
+                <Image src={ srcPrevImg } w="8rem" />
               </Box>
-              <Input type="file" pt={1} />
+              <Box w="full">
+                <Input type="file" pt={1} { ...register("photo", true) } />
+                {/* <FormHelperText>Hellow rodss</FormHelperText> */}
+              </Box>
             </HStack>
           </FormControl>
 
-          <FormControl isRequired mt={2}>
+          <FormControl mt={2}>
             <FormLabel>Nomor Urut</FormLabel>
-            <Input variant="filled" name="nik" type="number" min={0} { ...register("nomor")} />
+            <Input variant="filled" name="nomor" type="number" min={0} { ...register("nomor")} />
           </FormControl>
           <FormControl isRequired mt={2}>
             <FormLabel>Visi</FormLabel>
@@ -127,6 +133,13 @@ function CalonForm() {
 function CalonTable() {
   const { props: { calons } } = usePage<CalonsPageProps>();
   const { isOpen, onClose, data, setData, cancelRef } = useDialog<CalonData>();
+
+  useEffect(() => {
+    const ev = router.on("success", (ev) => {
+      onClose(true);
+    });
+    return ev;
+  }, []);
 
   return (<>
     <Card>

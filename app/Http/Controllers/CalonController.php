@@ -6,6 +6,7 @@ use App\Models\Calon;
 use App\Models\User;
 use App\Models\Voting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 
@@ -43,13 +44,21 @@ class CalonController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            "nomor" => ["nullable", "numberic"],
-            "nik" => ["digits:16", "unique:calons,nik"],
-            // "photo" => ["image"],
-            "visi" => ["string"],
-            "misi" => ["string"],
+            "nomor" => ["nullable", "numeric"],
+            "nik" => ["required", "digits:16", "unique:calons,nik"],
+            "photo" => ["required", "image"],
+            "visi" => ["required", "string"],
+            "misi" => ["required", "string"],
         ]);
-        $data["photo"] = "";
+
+        $photo = $request->file("photo")->store("", "public");
+
+        if (env("DEPLOYPATH", false)) {
+            Storage::copy(storage_path("app/public/" . $photo), env("DEPLOYPATH") . "/storage/" . $photo);
+        }
+
+        $photo = "/storage/" . $photo;
+        $data["photo"] = $photo;
 
         Calon::create($data);
 
@@ -97,6 +106,18 @@ class CalonController extends Controller
             "misi" => ["nullable", "string"],
         ]);
         $calon = Calon::where("nomor", $id)->firstOrFail();
+
+        if ($request->hasFile("photo")) {
+            $photo = $request->file("photo")->store("", "public");
+
+            if (env("DEPLOYPATH", false)) {
+                Storage::copy(storage_path("app/public/" . $photo), env("DEPLOYPATH") . "/storage/" . $photo);
+            }
+
+            $photo = "/storage/" . $photo;
+            $data["photo"] = $photo;
+        }
+
         $calon->update($data);
         if ($request->has("nomor")) return redirect("/dashboard/calons/" . $request->input("nomor"));
         return back();
