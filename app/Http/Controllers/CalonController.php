@@ -54,7 +54,10 @@ class CalonController extends Controller
         $photo = $request->file("photo")->store("", "public");
 
         if (env("DEPLOYPATH", false)) {
-            Storage::copy(storage_path("app/public/" . $photo), env("DEPLOYPATH") . "/storage/" . $photo);
+            // Storage::copy(storage_path("app/public/" . $photo), base_path(env("DEPLOYPATH") . "/storage/" . $photo));
+            // Storage::disk("deploy")
+            //     ->copy(storage_path("app/public/" . $photo), "storage/" . $photo);
+            copy(storage_path("app/public/" . $photo), env("DEPLOYPATH") . "/storage/" . $photo);
         }
 
         $photo = "/storage/" . $photo;
@@ -111,7 +114,8 @@ class CalonController extends Controller
             $photo = $request->file("photo")->store("", "public");
 
             if (env("DEPLOYPATH", false)) {
-                Storage::copy(storage_path("app/public/" . $photo), env("DEPLOYPATH") . "/storage/" . $photo);
+                // Storage::copy(storage_path("app/public/" . $photo), env("DEPLOYPATH") . "/storage/" . $photo);
+                copy(storage_path("app/public/" . $photo), env("DEPLOYPATH") . "/storage/" . $photo);
             }
 
             $photo = "/storage/" . $photo;
