@@ -5,7 +5,9 @@ A live preview right in your browser so you don't need to keep sending real emai
 > [!CAUTION]
 > As `react-email@2.0.0` has some errors.
 > `docker run -it --rm -w /app --name node-mini-env -v "%cd%":/app -p 3000:3000 node:20 /bin/sh -c "node -v && corepack enable pnpm && pnpm -v && pnpm i && pnpm dev"`
-> `docker run -it --rm -w /app --name node-mini-env -v "%cd%":/app -p 3000:3000 node:20 /bin/sh -c "node -v && corepack enable yarn && yarn -v && yarn i && yarn dev"`
+> `docker run -it --rm -w /app --name node-mini-env -v "%cd%":/app -p 3000:3000 node:20 /bin/sh -c "node -v && corepack enable yarn && yarn -v && yarn install && yarn dev"`
+> `docker run -it --rm -w /app --name node-mini-env -v "%cd%":/app -p 3000:3000 node:lts-alpine /bin/sh -c "node -v && corepack enable yarn && yarn -v && yarn install && yarn dev"`
+> `docker run -it --rm -w /app --name node-mini-env -v "%cd%":/app -p 3000:3000 node:lts-alpine /bin/sh -c "node -v && corepack enable yarn && yarn -v && yarn add -W @chakra-ui/icons"`
 
 ## Getting Started
 

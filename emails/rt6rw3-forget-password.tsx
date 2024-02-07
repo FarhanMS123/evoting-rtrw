@@ -2,7 +2,7 @@ import * as React from "react";
 import { Container, Footnote, Text, TextMute } from "../components/base";
 import { Button, Link, Section } from "@react-email/components";
 
-export const VercelInviteUserEmail = () => {
+export const ForgetPassword = () => {
   const previewText = `Ubah Password`;
 
   return (
@@ -39,4 +39,4 @@ export const VercelInviteUserEmail = () => {
   );
 };
 
-export default VercelInviteUserEmail;
+export default ForgetPassword;

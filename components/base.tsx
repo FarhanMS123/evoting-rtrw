@@ -1,17 +1,17 @@
 import {
-    Body,
-    Button,
-    Container as REContainer,
-    Head,
-    Heading as REHeading,
-    Hr,
-    Html,
-    Link,
-    Preview,
-    Text as REText,
-    type HeadingProps,
-    type TextProps,
-  } from "@react-email/components";
+  Body,
+  Button,
+  Container as REContainer,
+  Head,
+  Heading as REHeading,
+  Hr,
+  Html,
+  Link,
+  Preview,
+  Text as REText,
+  type HeadingProps,
+  type TextProps,
+} from "@react-email/components";
 import { Tailwind } from "@react-email/tailwind";
 import * as React from "react";
 
@@ -24,12 +24,12 @@ export type NodeProps = {
 };
 
 export const Header = () => (
-  <Heading>
+  <REHeading className="text-black text-[12px] font-bold text-center p-0 my-[30px] mx-0">
     PEMERINTAH DAERAH KHUSUS IBUKOTA JAKARTA<br />
     KECAMATAN KEMBANGAN KELURAHAN KEMBANGAN UTARA RW 3<br />
     <br />
     PEMILIHAN KETUA RT 6
-  </Heading>
+  </REHeading>
 );
 
 export function Footnote({ children }: NodeProps) {
@@ -55,7 +55,7 @@ export function Container({ username, previewText, children, footnote }: {
       <Head />
       <Preview>{previewText}</Preview>
       <Tailwind>
-        <Body className="bg-white my-auto mx-auto font-sans px-2">
+        <Body className="bg-[#eeeeee] my-auto mx-auto font-sans px-2">
           <REContainer className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] max-w-[465px]">
             <Header />
             <Text>
