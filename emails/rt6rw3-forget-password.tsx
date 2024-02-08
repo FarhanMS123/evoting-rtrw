@@ -22,7 +22,7 @@ export const ForgetPassword = () => {
         Kami menerima permintaan Ubah Password terhadap akun <b>NOMOR_NIK</b> dengan email <b>username@example.com</b>. 
         Jika kamu merasa membuat permintaan ini, kamu dapat menekan tombol "Ubah Password" di bawah ini.
       </Text>
-      <Section className="text-center mt-[32px] mb-[32px]">
+      <Section className="text-center my-[32px]">
         <Button
           className="bg-red-500 rounded text-white text-[12px] font-semibold no-underline text-center px-5 py-3"
           href="https://"
