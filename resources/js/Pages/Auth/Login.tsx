@@ -2,7 +2,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import { Alert, AlertIcon, Button, Card, CardBody, CardHeader, Center, FormControl, FormLabel, HStack, Heading, IconButton, Image, Input, InputGroup, InputRightAddon, Wrap, useBoolean } from "@chakra-ui/react";
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { QrCode } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HeaderPemilu from "~/Components/Header";
 import Footer from "~/Components/Layouts/Footer";
 import { DefaultPageProps } from "~/Components/Layouts/Layout";
@@ -13,8 +13,13 @@ export default function Login() {
   const { props: { reset_password } } = usePage<DefaultPageProps & { reset_password?: boolean }>();
   const { setData, post, errors } = useForm<Form>();
   const [showPassword, { toggle }] = useBoolean();
+  const [query, setQuery] = useState<Record<string, string | string[]>>({});
 
   console.log(errors);
+
+  useEffect(() => {
+    setQuery(Object.fromEntries(new URLSearchParams(window.location.search).entries()));
+  }, []);
 
   return <>
     <Center mt={24} mb={8} flexDirection="column">
@@ -32,7 +37,7 @@ export default function Login() {
           <form onSubmit={(e) => {e.preventDefault(); post("/auth/login");}}>
             <FormControl>
               <FormLabel>Nomor Induk Kependudukan</FormLabel>
-              <Input variant="filled" name="nik" placeholder="8899003112230000" onChange={e => setData("nik", e.target.value)} />
+              <Input variant="filled" name="nik" placeholder="8899003112230000" defaultValue={ query.nik } onChange={e => setData("nik", e.target.value)} />
             </FormControl>
             <FormControl mt={4}>
               <FormLabel>Password</FormLabel>
