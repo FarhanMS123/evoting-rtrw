@@ -71,7 +71,7 @@
               <tbody style="width:100%">
                 <tr style="width:100%">
                   <td align="center" data-id="__react-email-column">
-                    <img data-id="react-email-img" src={{ route("qr-code-1", ["nik" => $nik, $token => "0"]) }} width="80px" height="80px" style="display:block;outline:none;border:none;text-decoration:none" />
+                    <img data-id="react-email-img" src={{ route("qr-code-1", ["nik" => $nik, "token" => "0"]) }} width="80px" height="80px" style="display:block;outline:none;border:none;text-decoration:none" />
                   </td>
                 </tr>
               </tbody>
