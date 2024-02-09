@@ -23,7 +23,7 @@
             <p data-id="react-email-text" style="font-size:14px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">Halo {{ $user->nama }},</p>
             <p data-id="react-email-text" style="font-size:14px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
               Kami menerima permintaan Ubah Password terhadap akun <b>{{ $user->nik }}</b> dengan
-              email <b>{{ $user->email }}</b>. Jika kamu merasa membuat permintaan ini, kamu dapat
+              email <b>{{ $user->email }}</b>. Jika Bapak/Ibu/Saudara merasa membuat permintaan ini, Bapak/Ibu/Saudara dapat
               menekan tombol &quot;Ubah Password&quot; di bawah ini.
             </p>
             <table align="center" width="100%" data-id="react-email-section" border="0" cellPadding="0" cellSpacing="0" role="presentation" style="text-align:center;margin-top:32px;margin-bottom:32px">
@@ -42,7 +42,7 @@
               </tbody>
             </table>
             <p data-id="react-email-text" style="font-size:14px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
-              Permintaan ini hanya berlaku selama 60 menit. Jika kamu merasa tidak pernah membuat permintaan ini, kamu dapat mengabaikan email ini. Kamu juga dapat meminta bantuan panitia dengan
+              Permintaan ini hanya berlaku selama 60 menit. Jika Bapak/Ibu/Saudara merasa tidak pernah membuat permintaan ini, Bapak/Ibu/Saudara dapat mengabaikan email ini. Bapak/Ibu/Saudara juga dapat meminta bantuan panitia dengan
               menghubungi nomor yang tertera pada bagian terakhir email ini.
             </p>
             <p data-id="react-email-text" style="font-size:14px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">

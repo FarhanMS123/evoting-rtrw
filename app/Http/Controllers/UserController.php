@@ -42,12 +42,14 @@ class UserController extends Controller
             "pekerjaan" => ["required"],
             "email" => ["nullable", "email", "unique:users,email"],
             "telepon" => ["nullable", "unique:users,telepon"],
-            "password" => ["required"],
+            "password" => ["nullable"],
             "jenis_kelamin" => ["required", Rule::in(["laki-laki", "perempuan"])],
             "is_admin" => ["nullable", "boolean"],
             "non_villager" => ["nullable", "boolean"],
             "also_email" => ["nullable", "boolean"],
         ]);
+
+        if (!array_key_exists("password", $data)) $data["password"] = fake("en_US")->colorName() . fake()->numberBetween(100, 999);
 
         $user = User::create($data);
         if ($data["also_email"]) $user->notify(new UpdateUserInfo($data["nik"], $user, $data["password"]));

@@ -22,7 +22,7 @@
             </h1>
             <p data-id="react-email-text" style="font-size:14px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">Halo {{ $user->nama }},</p>
             <p data-id="react-email-text" style="font-size:14px;line-height:24px;margin:16px 0;color:rgb(0,0,0)">
-                Kamu terdaftar sebagai pemilih di Aplikasi Pemilihan RT 6 RW 3. Berikut informasi akun dapat dilihat pada tabel di bawah ini:
+                Bapak/Ibu/Saudara terdaftar sebagai pemilih di Aplikasi Pemilihan RT 6 RW 3. Berikut informasi akun dapat dilihat pada tabel di bawah ini:
             </p>
             <table style="border-collapse:collapse;width:100%">
               <tbody>

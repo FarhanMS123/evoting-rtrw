@@ -33,7 +33,7 @@ function CalonForm() {
   const [Gray200] = useToken("colors", ["gray.200"]);
   const { props: { calons, calon, users, show_utils } } = usePage<CalonsPageProps>();
 
-  const { data, setData, post, patch, errors, recentlySuccessful, wasSuccessful, processing, ...props } = useForm<FormCalonData & {_nomor? : number}>();
+  const { data, setData, post, patch, errors, recentlySuccessful, wasSuccessful, processing, ...props } = useForm<FormCalonData & {_nomor? : number; _method?: string;}>();
   const refForm = useRef<HTMLFormElement>(null);
 
   const idUser = useId();
@@ -43,6 +43,7 @@ function CalonForm() {
 
   useEffect(() => {
     setNikSearch(calon?.nik ?? "");
+    if (calon) setData("_method", "patch");
   }, [ calon ]);
 
   function search(val: string) {
@@ -67,7 +68,7 @@ function CalonForm() {
       <CardHeader>
         <Heading size="md">Kelola Data Warga</Heading>
       </CardHeader>
-      <form ref={refForm} onSubmit={(e) => {e.preventDefault(); (calon ? patch : post)("");}}>
+      <form ref={refForm} onSubmit={(e) => {e.preventDefault(); console.log({data, props}); post("");}}>
 
         <CardBody>
 

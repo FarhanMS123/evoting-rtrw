@@ -28,9 +28,10 @@ function UserForm () {
   const { props: { users, warga, show_utils } } = usePage<UsersPageProps>();
 
   const { setData, post, patch, errors, recentlySuccessful, wasSuccessful, processing, ...props } = useForm<
-    UserData & {
+    Omit<UserData, "password"> & {
       _nik? : string;
       also_email: boolean;
+      password?: string;
     }
   >();
   const [showPassword, { toggle }] = useBoolean();
@@ -113,7 +114,8 @@ function UserForm () {
               <Input variant="filled" name="telepon" placeholder="+62XXXYYYYZZZZ" type="tel" {...register("telepon")} />
               { errors.telepon && <FormHelperText>{errors.telepon}</FormHelperText> }
             </FormControl> }
-            <FormControl isRequired={!warga} mt={2}>
+
+            { show_utils && <FormControl isRequired={!warga} mt={2}>
               <FormLabel>Password</FormLabel>
               <HStack>
                 <InputGroup>
@@ -130,11 +132,12 @@ function UserForm () {
                   </InputRightAddon>
                 </InputGroup>
                 <IconButton icon={<RepeatIcon />} aria-label="Generate" variant="ghost"
-                  onClick={() => setPass(`${ fakerID_ID.word.adverb() }${ fakerID_ID.word.noun() }`)}
+                  onClick={() => setPass(`${ fakerID_ID.word.adverb() }`)}
                 />
               </HStack>
               <FormHelperText>Harap catat dan simpan password dengan aman. Informasi ini akan disimpan dalam bentuk terenkripsi dan tidak akan muncul lagi.</FormHelperText>
-            </FormControl>
+            </FormControl> }
+
             <FormControl mt={2}>
               <FormLabel>Lanjutan</FormLabel>
               { show_utils && <HStack gap={4}>

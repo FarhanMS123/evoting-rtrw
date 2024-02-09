@@ -110,7 +110,7 @@ class CalonController extends Controller
         ]);
         $calon = Calon::where("nomor", $id)->firstOrFail();
 
-        if ($request->hasFile("photo")) {
+        if ($request->file("photo")) {
             $photo = $request->file("photo")->store("", "public");
 
             if (env("DEPLOYPATH", false)) {
@@ -121,6 +121,8 @@ class CalonController extends Controller
             $photo = "/storage/" . $photo;
             $data["photo"] = $photo;
         }
+
+        // dd("hehehehe", $request->file("photo"));
 
         $calon->update($data);
         if ($request->has("nomor")) return redirect("/dashboard/calons/" . $request->input("nomor"));
