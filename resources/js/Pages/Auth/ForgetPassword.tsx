@@ -34,7 +34,7 @@ export default function ForgetPassword() {
           { hasErrors && <Alert status="error" mb={4}>
             <AlertIcon />
             <Text>
-              Terjadi kesalahan! Pastikan NIK dan email sesuai dengan yang terdaftar. Cek Console untuk inspeksi lebih lanjut.
+              Terjadi kesalahan! Pastikan NIK dan email sesuai dengan yang terdaftar. Coba kembali dalam 1 menit atau cek Console untuk inspeksi lebih lanjut.
             </Text>
           </Alert> }
 

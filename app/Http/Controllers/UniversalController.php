@@ -6,6 +6,7 @@ use App\Models\Calon;
 use App\Models\User;
 use App\Models\Voting;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class UniversalController extends Controller
 {
@@ -23,5 +24,17 @@ class UniversalController extends Controller
             "type" => "voting",
             "clean" => "true",
         ]);
+    }
+
+    public function qrCode1(Request $request) {
+        $token = $request->query("token", "");
+        $nik = $request->query("nik", "");
+        return response()->streamDownload(function () use ($token, $nik) {
+            echo QrCode::size(500)->format('png')->generate(route("login", [
+                "via" => "qr",
+                "token" => $token,
+                "nik" => $nik,
+            ]));
+        }, "qr-code-1.png");
     }
 }

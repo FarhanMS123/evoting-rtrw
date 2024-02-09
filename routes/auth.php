@@ -19,5 +19,5 @@ Route::inertia("/auth/reset-password/{token}", "Auth/ResetPassword", [
 
 Route::post('/auth/forget-password', [AuthController::class, "forgotPassword"])->name('password.email');
 Route::post('/auth/reset-password', [AuthController::class, "resetPassword"])->name('password.update');
-Route::post('/auth/login', [AuthController::class, "login"])->middleware("guest");
+Route::post('/auth/login', [AuthController::class, "login"])->name("login")->middleware("guest");
 Route::post('/auth/logout', [AuthController::class, "logout"])->middleware("auth")->name("logout");

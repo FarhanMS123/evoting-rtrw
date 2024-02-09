@@ -10,6 +10,7 @@
         "@chakra-ui/react": "^2.8.2",
         "@emotion/react": "^11.11.1",
         "@emotion/styled": "^11.11.0",
+        "@faker-js/faker": "^8.4.1",
         "@inertiajs/react": "^1.0.14",
         "chart.js": "^4.4.1",
         "framer-motion": "^10.16.12",

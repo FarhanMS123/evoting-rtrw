@@ -5,6 +5,7 @@ specifiers:
   '@chakra-ui/react': ^2.8.2
   '@emotion/react': ^11.11.1
   '@emotion/styled': ^11.11.0
+  '@faker-js/faker': ^8.4.1
   '@inertiajs/react': ^1.0.14
   '@types/react': ^18.2.41
   '@types/react-dom': ^18.2.17
@@ -30,6 +31,7 @@ dependencies:
   '@chakra-ui/react': 2.8.2_xsx4463p2ji45y4az3p4glqaji
   '@emotion/react': 11.11.1_aubhhyadwwrly2ms2jqnyk2qcu
   '@emotion/styled': 11.11.0_x4qzsp7trrlrlz6xcad7qvinxu
+  '@faker-js/faker': 8.4.1
   '@inertiajs/react': 1.0.14_react@18.2.0
   chart.js: 4.4.1
   framer-motion: 10.16.12_biqbaboplfbrettd7655fr4n2y
@@ -1665,6 +1667,11 @@ packages:
     os: [win32]
     requiresBuild: true
     optional: true
+
+  /@faker-js/faker/8.4.1:
+    resolution: {integrity: sha512-XQ3cU+Q8Uqmrbf2e0cIC/QN43sTBSC8KF12u29Mb47tWrt2hAgBXSgpZMj4Ao8Uk0iJcU99QsOCaIL8934obCg==}
+    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+    dev: false
 
   /@inertiajs/core/1.0.14:
     resolution: {integrity: sha512-S33PU6mWEYbn/s2Op+CJ6MN7ON354vWw8Y+UvtQzPt0r7pVgOuIArrqqsoulf9oQz9sbP1+vp/tCvyBzm4XmpA==}

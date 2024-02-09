@@ -1,4 +1,4 @@
-import { ViewIcon, ViewOffIcon, EditIcon, DeleteIcon } from "@chakra-ui/icons";
+import { ViewIcon, ViewOffIcon, EditIcon, DeleteIcon, RepeatIcon } from "@chakra-ui/icons";
 import { type InputProps, Card, CardBody, FormControl, FormLabel, Input, RadioGroup, Radio, HStack, InputGroup, InputRightAddon,
         IconButton, CardFooter, Button, FormHelperText, Checkbox, useToast, TableContainer, Table, Tr, Th, Thead, Tbody, Td,
         TableCaption, useBoolean, CardHeader, Heading, Text } from "@chakra-ui/react";
@@ -7,6 +7,7 @@ import { useState, type ReactNode, useEffect, useRef } from "react";
 import { DialogSkeleton, useDialog } from "~/Components/Dialog";
 import DashboardLayout, { DashboardMenu } from "~/Components/Layouts/DashboardLayout";
 import { type DefaultPageProps, type UserData } from "~/Components/Layouts/Layout";
+import { fakerID_ID } from "@faker-js/faker";
 
 export type UsersPageProps = {
   warga?: UserData;
@@ -26,9 +27,19 @@ function UserForm () {
   const toast = useToast();
   const { props: { users, warga, show_utils } } = usePage<UsersPageProps>();
 
-  const { setData, post, patch, errors, recentlySuccessful, wasSuccessful, processing, ...props } = useForm<UserData & {_nik? : string}>();
+  const { setData, post, patch, errors, recentlySuccessful, wasSuccessful, processing, ...props } = useForm<
+    UserData & {
+      _nik? : string;
+      also_email: boolean;
+    }
+  >();
   const [showPassword, { toggle }] = useBoolean();
+  const [pass, setPass] = useState("");
   const refForm = useRef<HTMLFormElement>(null);
+
+  useEffect(() => {
+    setData("password", pass);
+  }, [pass]);
 
   useEffect(() => {
     if (Object.keys(errors).length > 0) {
@@ -46,6 +57,10 @@ function UserForm () {
       refForm.current?.reset();
     }
   }, [errors, wasSuccessful]);
+
+  useEffect(() => {
+    setData("also_email", true);
+  }, []);
 
   function register(name?: string) {
     return {
@@ -100,27 +115,41 @@ function UserForm () {
             </FormControl> }
             <FormControl isRequired={!warga} mt={2}>
               <FormLabel>Password</FormLabel>
-              <InputGroup>
-                <Input variant="filled" name="password" placeholder={showPassword ? "password" : "************"} type={showPassword ? "text" : "password"} {...register()} />
-                <InputRightAddon p={0}>
-                  {showPassword ? <IconButton aria-label="password showed" icon={<ViewIcon />} onClick={() => toggle()} /> :
-                  <IconButton color="BlackAlpha.900" colorScheme="" aria-label="password hid" icon={<ViewOffIcon />} onClick={() => toggle()} />}
-                </InputRightAddon>
-              </InputGroup>
+              <HStack>
+                <InputGroup>
+                  <Input variant="filled" name="password"
+                    placeholder={showPassword ? "password" : "************"}
+                    type={showPassword ? "text" : "password"}
+                    {...register()}
+                    onChange={(e) => setPass(e.target.value)}
+                    value={pass}
+                  />
+                  <InputRightAddon p={0}>
+                    {showPassword ? <IconButton aria-label="password showed" icon={<ViewIcon />} onClick={() => toggle()} /> :
+                    <IconButton color="BlackAlpha.900" colorScheme="" aria-label="password hid" icon={<ViewOffIcon />} onClick={() => toggle()} />}
+                  </InputRightAddon>
+                </InputGroup>
+                <IconButton icon={<RepeatIcon />} aria-label="Generate" variant="ghost"
+                  onClick={() => setPass(`${ fakerID_ID.word.adverb() }${ fakerID_ID.word.noun() }`)}
+                />
+              </HStack>
               <FormHelperText>Harap catat dan simpan password dengan aman. Informasi ini akan disimpan dalam bentuk terenkripsi dan tidak akan muncul lagi.</FormHelperText>
             </FormControl>
-            { show_utils && <FormControl mt={2}>
+            <FormControl mt={2}>
               <FormLabel>Lanjutan</FormLabel>
-              <HStack gap={4}>
-                <Checkbox defaultChecked={warga?.is_admin} onChange={(e) => setData("is_admin", e.target.checked)}>Jadikan Admin</Checkbox>
-                <Checkbox defaultChecked={warga?.non_villager} onChange={(e) => setData("non_villager", e.target.checked)}>Bukan Warga</Checkbox>
-              </HStack>
-            </FormControl> }
+              { show_utils && <HStack gap={4}>
+                  <Checkbox defaultChecked={warga?.is_admin} onChange={(e) => setData("is_admin", e.target.checked)}>Jadikan Admin</Checkbox>
+                  <Checkbox defaultChecked={warga?.non_villager} onChange={(e) => setData("non_villager", e.target.checked)}>Bukan Warga</Checkbox>
+              </HStack> }
+              <Checkbox defaultChecked={true} onChange={(e) => setData("also_email", e.target.checked)}>Kirim pembaruan melalui email</Checkbox>
+            </FormControl>
         </CardBody>
         <CardFooter pt={0} display="flex" justifyContent="end">
-          {!warga && <Button isLoading={processing} type="submit">Tambah</Button> }
+          {!warga && <>
+            <Button isLoading={processing} type="submit">Tambah</Button>
+          </> }
           { warga && <>
-            <Button variant="ghost" type="reset" mr={4} onClick={() => router.reload({})}>Reset</Button>
+            <Button variant="ghost" type="reset" mr={2} onClick={() => router.reload({})}>Reset</Button>
             <Button isLoading={processing} type="submit">Perbarui</Button>
           </> }
         </CardFooter>

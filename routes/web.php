@@ -22,6 +22,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 require "auth.php";
 
+Route::get("/assets/qr-code-1.png", [UniversalController::class, "qrCode1"])->name("qr-code-1");
+
 Route::get('/', [UniversalController::class, "showHome"])->middleware("auth")->name("home");
 Route::get('/pemilihan', [VotingController::class, "create"])->middleware("auth")->name("voting");
 Route::post('/pemilihan', [VotingController::class, "store"])->middleware("auth");

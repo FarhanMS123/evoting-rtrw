@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Calon;
 use App\Models\User;
 use App\Models\Voting;
+use App\Notifications\UpdateUserInfo;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -45,9 +46,11 @@ class UserController extends Controller
             "jenis_kelamin" => ["required", Rule::in(["laki-laki", "perempuan"])],
             "is_admin" => ["nullable", "boolean"],
             "non_villager" => ["nullable", "boolean"],
+            "also_email" => ["nullable", "boolean"],
         ]);
 
-        User::create($data);
+        $user = User::create($data);
+        if ($data["also_email"]) $user->notify(new UpdateUserInfo($data["nik"], $user, $data["password"]));
 
         return back();
     }
@@ -89,9 +92,16 @@ class UserController extends Controller
             "jenis_kelamin" => ["nullable", Rule::in(["laki-laki", "perempuan"])],
             "is_admin" => ["nullable", "boolean"],
             "non_villager" => ["nullable", "boolean"],
+            "also_email" => ["nullable", "boolean"],
         ]);
         $warga = User::where("nik", $id)->firstOrFail();
         $warga->update($data);
+        if ($data["also_email"]) $warga->notify(new UpdateUserInfo(
+            array_key_exists("nik", $data) ? $data["nik"] : $warga->nik,
+            $warga,
+            array_key_exists("password", $data) ? $data["password"] : null
+        ));
+
         if ($request->has("nik")) return redirect("/dashboard/users/" . $request->input("nik"));
         return back();
     }
