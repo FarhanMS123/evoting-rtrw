@@ -29,12 +29,16 @@ class UniversalController extends Controller
     public function qrCode1(Request $request) {
         $token = $request->query("token", "");
         $nik = $request->query("nik", "");
-        return response()->streamDownload(function () use ($token, $nik) {
-            echo QrCode::size(500)->format('png')->generate(route("login", [
+        return response(
+            QrCode::size(500)->format('png')->generate(route("login", [
                 "via" => "qr",
                 "token" => $token,
                 "nik" => $nik,
-            ]));
-        }, "qr-code-1.png");
+            ])),
+            200,
+            [
+                "Content-Type" => "image/png",
+            ],
+        );
     }
 }
