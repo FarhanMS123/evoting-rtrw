@@ -94,14 +94,18 @@
               <tbody style="width:100%">
                 <tr style="width:100%">
                   <td width="40px" data-id="__react-email-column"><img data-id="react-email-img" src="https://static.whatsapp.net/rsrc.php/v3/yz/r/ujTY9i_Jhs1.png" width="24px" height="24px" style="display:block;outline:none;border:none;text-decoration:none" /></td>
-                  <td data-id="__react-email-column"><a href="https://wa.me/+6271200001111" data-id="react-email-link" target="_blank" style="color:#067df7;text-decoration:none">(+62) 712-0000-1111</a></td>
+                  <td data-id="__react-email-column">
+                    <a href="https://wa.me/+6281385928011" data-id="react-email-link" target="_blank" style="color:#067df7;text-decoration:none">(+62) 813-8592-8011</a>
+                  </td>
                 </tr>
               </tbody>
             </table>
             <table align="center" width="100%" data-id="react-email-row" role="presentation" cellSpacing="0" cellPadding="0" border="0">
               <tbody style="width:100%">
                 <tr style="width:100%">
-                  <td width="40px" data-id="__react-email-column"><img data-id="react-email-img" src="https://lh3.googleusercontent.com/0rpHlrX8IG77awQMuUZpQ0zGWT7HRYtpncsuRnFo6V3c8Lh2hPjXnEuhDDd-OsLz1vua4ld2rlUYFAaBYk-rZCODmi2eJlwUEVsZgg" width="24px" height="24px" style="display:block;outline:none;border:none;text-decoration:none" /></td>
+                  <td width="40px" data-id="__react-email-column">
+                    <img data-id="react-email-img" src="https://lh3.googleusercontent.com/0rpHlrX8IG77awQMuUZpQ0zGWT7HRYtpncsuRnFo6V3c8Lh2hPjXnEuhDDd-OsLz1vua4ld2rlUYFAaBYk-rZCODmi2eJlwUEVsZgg" width="24px" height="24px" style="display:block;outline:none;border:none;text-decoration:none" />
+                  </td>
                   <td data-id="__react-email-column"><a href="mailto:cs@rt6rw3.xyz" data-id="react-email-link" target="_blank" style="color:#067df7;text-decoration:none">cs@rt6rw3.xyz</a></td>
                 </tr>
               </tbody>

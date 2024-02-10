@@ -71,7 +71,7 @@
                     <img data-id="react-email-img" src="https://static.whatsapp.net/rsrc.php/v3/yz/r/ujTY9i_Jhs1.png" width="24px" height="24px" style="display:block;outline:none;border:none;text-decoration:none" />
                   </td>
                   <td data-id="__react-email-column">
-                    <a href="https://wa.me/+6271200001111" data-id="react-email-link" target="_blank" style="color:#067df7;text-decoration:none">(+62) 712-0000-1111</a>
+                    <a href="https://wa.me/+6281385928011" data-id="react-email-link" target="_blank" style="color:#067df7;text-decoration:none">(+62) 813-8592-8011</a>
                   </td>
                 </tr>
               </tbody>
