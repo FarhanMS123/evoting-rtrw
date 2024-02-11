@@ -66,7 +66,7 @@ function CalonForm() {
   return (
     <Card>
       <CardHeader>
-        <Heading size="md">Kelola Data Warga</Heading>
+        <Heading size="md">Kelola Data Calon</Heading>
       </CardHeader>
       <form ref={refForm} onSubmit={(e) => {e.preventDefault(); console.log({data, props}); post("");}}>
 

@@ -101,7 +101,7 @@ export default function Layout({ children, disableFooter, ...props }: {
   return <>
     <Card p={4} borderRadius={0}>
       <HStack>
-        <Image src="/assets/logo-nm.png" boxSize={10} />
+        <Image src="/assets/logo-gp.jpg" boxSize={10} />
         <HStack gap={0} ml={2}>
           { !isAdmin && <StyledButton href="/">Beranda</StyledButton> }
           { isAdmin && <>
